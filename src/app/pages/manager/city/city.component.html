@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+        <form class="form-inline mt-5">
+            <div class="md-form my-0">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </div>
+            <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+        </form>
+        <table class="table mt-5">
+            <thead class="bg-warning">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let city of cities">
+                    <td>{{city.name}}</td>
+                    <td>{{city.description}}</td>
+                    <td>{{city.department_id}}</td>
+                    <td><button class="btn btn-primary" (click)="findCity(city.id)" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo ciudad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="city.name" name="name" #name="ngModel" type="text" class="form-control" required>
+                    <label for="description">Descripcion</label>
+                    <textarea [(ngModel)]="city.description" name="description" #description="ngModel" rows="2" type="text" class="form-control" required></textarea>
+                    <label>Departamento</label>
+                    <select [(ngModel)]="city.department_id" name="department_id" #department_id="ngModel" class="form-control">
+                    <option selected>Seleccione</option>
+                    <option *ngFor="let department_id of departments">{{department_id.name}}</option>
+                  </select>
+                    <div class="modal-footer">
+                        <button type="submit" (click)="saveCity()" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestion de ciudad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="cityEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control" required>
+                    <label for="description">Descripcion</label>
+                    <textarea [(ngModel)]="cityEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" rows="2" type="text" class="form-control" required></textarea>
+                    <label>Departamento</label>
+                    <select [(ngModel)]="cityEdit.department_id" name="department_idEdit" #department_idEdit="ngModel" class="form-control">
+                    <option selected>Seleccione</option>
+                    <option *ngFor="let department_id of departments">{{department_id.name}}</option>
+                  </select>
+                    <div class="modal-footer">
+                        <button type="submit" (click)="editCity()" class="btn btn-warning">Editar</button>
+                        <button type="submit" (click)="deleteCity()" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

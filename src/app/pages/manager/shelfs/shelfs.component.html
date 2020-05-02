@@ -1,1 +1,78 @@
-<p>shelfs works!</p>
+<div class="container">
+    <div class="row">
+        <form class="form-inline mt-5">
+            <div class="md-form my-0">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </div>
+            <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+        </form>
+        <table class="table mt-5">
+            <thead class="bg-warning">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let shelf of shelfs">
+                    <td>{{shelf.id}}</td>
+                    <td>{{shelf.name}}</td>
+                    <td>{{shelf.description}}</td>
+                    <td><button class="btn btn-primary" type="submit" (click)="findShelf(shelf.id)" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo departamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="shelf.name" name="name" #name="ngModel" type="text" class="form-control">
+                    <label for="">Descripcion</label>
+                    <textarea [(ngModel)]="shelf.description" name="description" #description="ngModel" type="text" class="form-control"></textarea>
+
+                    <div class="modal-footer">
+                        <button type="submit" (click)="saveShelf()" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestion de departamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="shelfEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
+                    <label for="">Descripcion</label>
+                    <textarea [(ngModel)]="shelfEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" type="text" class="form-control"></textarea>
+                    <div class="modal-footer">
+                        <button type="submit" (click)="editShelf()" class="btn btn-warning">Editar</button>
+                        <button type="submit" (click)="deleteShelf()" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

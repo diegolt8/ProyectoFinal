@@ -16,11 +16,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let laboratory of laboratories">
-                    <td>{{laboratory.id}}</td>
-                    <td>{{laboratory.name}}</td>
-                    <td>{{laboratory.description}}</td>
-                    <td><button class="btn btn-primary" type="submit" (click)="findLaboratory(laboratory.id)" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                <tr *ngFor="let rol of roles">
+                    <td>{{rol.id}}</td>
+                    <td>{{rol.name}}</td>
+                    <td>{{rol.description}}</td>
+                    <td><button class="btn btn-primary" type="submit" (click)="findRol(rol.id)" data-toggle="modal" data-target="#editar">Gestion</button></td>
                 </tr>
             </tbody>
         </table>
@@ -31,7 +31,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo laboratorio</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo Rol</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -39,12 +39,12 @@
             <div class="modal-body">
                 <form>
                     <label for="name">Nombre</label>
-                    <input [(ngModel)]="laboratory.name" name="name" #name="ngModel" type="text" class="form-control">
+                    <input [(ngModel)]="rol.name" name="name" #name="ngModel" type="text" class="form-control">
                     <label for="">Descripcion</label>
-                    <textarea [(ngModel)]="laboratory.description" name="description" #description="ngModel" type="text" class="form-control"></textarea>
+                    <textarea [(ngModel)]="rol.description" name="description" #description="ngModel" type="text" class="form-control"></textarea>
 
                     <div class="modal-footer">
-                        <button type="submit" (click)="savelaboratory()" class="btn btn-primary">Guardar</button>
+                        <button type="submit" (click)="saveRol()" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -56,7 +56,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Gestion de departamento</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Gestion de Rol</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -64,12 +64,12 @@
             <div class="modal-body">
                 <form>
                     <label for="name">Nombre</label>
-                    <input [(ngModel)]="laboratoryEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
+                    <input [(ngModel)]="rolEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
                     <label for="">Descripcion</label>
-                    <textarea [(ngModel)]="laboratoryEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" type="text" class="form-control"></textarea>
+                    <textarea [(ngModel)]="rolEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" type="text" class="form-control"></textarea>
                     <div class="modal-footer">
-                        <button type="submit" (click)="editlaboratory()" class="btn btn-warning">Editar</button>
-                        <button type="submit" (click)="deletelaboratory()" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" (click)="editRol()" class="btn btn-warning">Editar</button>
+                        <button type="submit" (click)="deleteRol()" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>

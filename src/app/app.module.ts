@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, FormBuilder } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,13 @@ import { SalesComponent } from './pages/manager/sales/sales.component';
 import { UsersComponent } from './pages/manager/users/users.component';
 import { ShelfsComponent } from './pages/manager/shelfs/shelfs.component';
 import { LaboratoriesComponent } from './pages/manager/laboratories/laboratories.component';
+import { CityComponent } from './pages/manager/city/city.component';
+import { DatePipe } from '@angular/common';
+import { DepartmentComponent } from './pages/manager/department/department.component';
+import { RolComponent } from './pages/manager/rol/rol.component';
+import { StatusComponent } from './pages/manager/status/status.component';
+import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +39,24 @@ import { LaboratoriesComponent } from './pages/manager/laboratories/laboratories
     SalesComponent,
     UsersComponent,
     ShelfsComponent,
-    LaboratoriesComponent
+    LaboratoriesComponent,
+    CityComponent,
+    DepartmentComponent,
+    RolComponent,
+    StatusComponent,
+    TypeproductComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    FormBuilder,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,103 @@
+<div class="body">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-5 mb-5">
+                <div id="card" class="card">
+                    <div id="cabecera-carta" class="card-header">
+                        Bienvenidos
+                        <img src="./../../../assets/img/logon.png">
+                    </div>
+                    <div id="card-body" class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="email">Usuario</label>
+                                <input type="text" class="form-control" id="email" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Contraseña</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            <button type="submit" id="btn-ingresar" class="btn btn-primary mt-4 mb-3 col-md-12">Ingresar</button>
+                            <a type="submit" id="registrar" data-toggle="modal" data-target="#registro">Registrate!</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registro" tabindex="-1" role="dialog" aria-labelledby="registro" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light text-justify" id="login">Registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nombres:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Apellidos:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                        <div class="form-group">
+                            <label for="sel1">Tipo documento:</label>
+                            <select class="form-control" id="sel1">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                            </select>
+                        </div>
+                        <label for="recipient-name" class="col-form-label">Numero documento:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                        <div class="form-group">
+                            <label for="sel1">Genero:</label>
+                            <select class="form-control" id="sel1">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                            </select>
+                        </div>
+                        <label for="recipient-name" class="col-form-label">Fecha de ingreso:</label>
+                        <input type="date" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Edad:</label>
+                        <input type="number" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Fecha de nacimiento:</label>
+                        <input type="date" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">puntos:</label>
+                        <input type="number" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Contrasenia:</label>
+                        <input type="password" class="form-control" id="recipient-name">
+                        <div class="form-group">
+                            <label for="sel1">Departamento:</label>
+                            <select class="form-control" id="sel1">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sel1">Ciudad:</label>
+                            <select class="form-control" id="sel1">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>

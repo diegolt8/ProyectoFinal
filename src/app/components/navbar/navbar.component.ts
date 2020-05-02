@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import $ from 'jquery';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,7 @@ import $ from 'jquery';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(){
     $(window).scroll(function() {
@@ -19,6 +20,10 @@ export class NavbarComponent implements OnInit {
           $('.nav').removeClass('affix');
       }
   });
+  }
+
+  login() {
+    this.router.navigate(['login']);
   }
 
 }

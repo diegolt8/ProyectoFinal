@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,7 @@ import { RolComponent } from './pages/manager/rol/rol.component';
 import { StatusComponent } from './pages/manager/status/status.component';
 import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.component';
 import { LoginComponent } from './pages/login/login.component';
+import { FilterPipe } from 'src/pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -45,17 +47,20 @@ import { LoginComponent } from './pages/login/login.component';
     RolComponent,
     StatusComponent,
     TypeproductComponent,
-    LoginComponent
+    LoginComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgxPaginationModule,
   ],
   providers: [
     FormBuilder,
-    DatePipe
+    DatePipe,
+    FilterPipe
   ],
   bootstrap: [AppComponent]
 })

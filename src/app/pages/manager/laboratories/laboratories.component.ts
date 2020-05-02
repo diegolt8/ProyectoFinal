@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LaboratoryService } from 'src/app/services/laboratory.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-laboratories',
@@ -8,12 +9,17 @@ import { LaboratoryService } from 'src/app/services/laboratory.service';
 })
 export class LaboratoriesComponent implements OnInit {
 
-  constructor(private laboratoryService: LaboratoryService) { 
+  constructor(private laboratoryService: LaboratoryService) {
     this.getlaboratories();
   }
 
   ngOnInit(): void {
   }
+
+  
+  FilterPipe: any = '';
+
+  actualPage = 1;
 
   laboratory: any = {
     name: '',
@@ -48,9 +54,30 @@ export class LaboratoriesComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getlaboratories();
       } else if (res.code === '2') {
-        console.log('No se pudo eliminar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo eliminar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     });
   }
@@ -73,9 +100,30 @@ export class LaboratoriesComponent implements OnInit {
       res = data;
       console.log(data);
       if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se editó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getlaboratories();
       } else if (res.code === '2') {
-        console.log('No se pudo actualizar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo editar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     });
   }
@@ -94,12 +142,31 @@ export class LaboratoriesComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        console.log('se pudo registrar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se registro satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getlaboratories();
       } else if (res.code === '2') {
-        console.log('no se pudo registrar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Oops! no se pudo registrar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     });
   }
-
 }

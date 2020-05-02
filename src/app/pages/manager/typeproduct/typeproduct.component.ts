@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TypeProductService } from 'src/app/services/typeproduct.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-typeproduct',
@@ -8,9 +9,13 @@ import { TypeProductService } from 'src/app/services/typeproduct.service';
 })
 export class TypeproductComponent implements OnInit {
 
-  constructor(private typeProductService: TypeProductService) { 
+  constructor(private typeProductService: TypeProductService) {
     this.getTypeProducts();
   }
+
+  FilterPipe: any = '';
+
+  actualPage = 1;
 
   ngOnInit(): void {
   }
@@ -48,9 +53,30 @@ export class TypeproductComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getTypeProducts();
       } else if (res.code === '2') {
-        console.log('No se pudo eliminar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo eliminar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     });
   }
@@ -73,9 +99,30 @@ export class TypeproductComponent implements OnInit {
       res = data;
       console.log(data);
       if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se editó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getTypeProducts();
       } else if (res.code === '2') {
-        console.log('No se pudo actualizar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo editar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     });
   }
@@ -94,10 +141,30 @@ export class TypeproductComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        console.log('se pudo registrar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se registro satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getTypeProducts();
       } else if (res.code === '2') {
-        console.log('no se pudo registrar');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Oops! no se pudo registrar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     });
   }

@@ -10,264 +10,207 @@
             <table class="table mt-5">
                 <thead class="bg-primary text-light">
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">miligramos</th>
                         <th scope="col">nombre</th>
                         <th scope="col">descripcion</th>
                         <th scope="col">fecha de exp</th>
                         <th scope="col">fecha de venc</th>
+                        <th scope="col">lote code</th>
                         <th scope="col">Cantidad</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                    <tr *ngFor="let inventory of inventories">
+                        <td>{{inventory.miligrams}}</td>
+                        <td>{{inventory.name}}</td>
+                        <td>{{inventory.description}}</td>
+                        <td>{{inventory.admissiondate}}</td>
+                        <td>{{inventory.expirationdate}}</td>
+                        <td>{{inventory.lotecode}}</td>
+                        <td>{{inventory.quantity}}</td>
+                        <td>{{inventory.provider_id}}</td>
+                        <td>{{inventory.status_id}}</td>
+                        <td><button class="btn btn-primary" (click)="findProduct(inventory.id)" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                </div>
-                <div class="modal-body">
-                    <label for="">Miligramos</label>
-                    <input type="number" class="form-control" min="0">
-                    <label for="">Nombre</label>
-                    <input type="text" class="form-control">
-                    <label for="">Descripcion</label>
-                    <textarea class="form-control"></textarea>
-                    <label for="">Fecha de ingreso</label>
-                    <input type="date" class="form-control">
-                    <label for="">Fecha de vencimiento</label>
-                    <input type="date" class="form-control">
-                    <label for="">codigo de lote</label>
-                    <input type="text" class="form-control">
-                    <label for="">Cantidad</label>
-                    <input type="number" class="form-control" min="0">
-                    <label for="">Precio</label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    </div>
-                    <div class="input-group-prepend">
-                        <label>Laboratorio</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Estante</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Proveedor</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Proveedor ciudad</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Proveedor departamento</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Tipo producto</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
+        <div class="bg-transparent text-center mt-5 mb-5">
+            <pagination-controls class="my-pagination" (pageChange)="actualPage = $event">
+            </pagination-controls>
         </div>
     </div>
-
-    <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Gestion de producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                </div>
-                <div class="modal-body">
-                    <label for="">Miligramos</label>
-                    <input type="number" class="form-control" min="0">
-                    <label for="">Nombre</label>
-                    <input type="text" class="form-control">
-                    <label for="">Descripcion</label>
-                    <textarea class="form-control"></textarea>
-                    <label for="">Fecha de ingreso</label>
-                    <input type="date" class="form-control">
-                    <label for="">Fecha de vencimiento</label>
-                    <input type="date" class="form-control">
-                    <label for="">codigo de lote</label>
-                    <input type="text" class="form-control">
-                    <label for="">Cantidad</label>
-                    <input type="number" class="form-control" min="0">
-                    <label for="">Precio</label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    </div>
-                    <div class="input-group-prepend">
-                        <label>Laboratorio</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Estante</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Proveedor</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Proveedor ciudad</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Proveedor departamento</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                    <div class="input-group-prepend">
-                        <label>Tipo producto</label>
-                    </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </body>
+
+<div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="miligrams">Miligramos</label>
+                    <input type="number" [(ngModel)]="inventory.miligrams" name="miligrams" #miligrams="ngModel" class="form-control" min="0">
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="inventory.name" name="name" #name="ngModel" type="text" class="form-control">
+                    <label for="description">Descripcion</label>
+                    <textarea [(ngModel)]="inventory.description" name="description" #description="ngModel" class="form-control"></textarea>
+                    <label for="admissiondate">Fecha de ingreso</label>
+                    <input type="date" [(ngModel)]="inventory.admissiondate" name="admissiondate" #admissiondate="ngModel" class="form-control">
+                    <label for="expirationdate">Fecha de vencimiento</label>
+                    <input type="date" [(ngModel)]="inventory.expirationdate" name="expirationdate" #expirationdate="ngModel" class="form-control">
+                    <label for="lotecode">codigo de lote</label>
+                    <input type="text" [(ngModel)]="inventory.lotecode" name="lotecode" #lotecode="ngModel" class="form-control">
+                    <label for="quantity">Cantidad</label>
+                    <input type="number" [(ngModel)]="inventory.quantity" name="quantity" #quantity="ngModel" class="form-control" min="0">
+                    <label for="price">Precio</label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" [(ngModel)]="inventory.price" name="price" #price="ngModel" aria-label="Amount (to the nearest dollar)">
+                    </div>
+                    <div class="input-group-prepend">
+                        <label>Proveedor</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventory.provider_id" name="provider_id" #provider_id="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccione...</option>
+                        <option *ngFor="let provider_id of providers">{{provider_id.name}}</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label>Estante</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventory.shelf_id" name="shelf_id" #shelf_id="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccionee...</option>
+                        <option *ngFor="let shelf_id of shelfs">{{shelf_id.name}}</option>
+                     </select>
+                    <div class="input-group-prepend">
+                        <label>Tipo producto</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventory.typeproduct_id" name="typeproduct_id" #typeproduct_id="ngModel" id="inputGroupSelect01">
+                         <option selected>Seleccione...</option>
+                         <option *ngFor="let typeproduct_id of typeproducts">{{typeproduct_id.name}}</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label>Laboratorio</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventory.laboratory_id" name="laboratory_id" #laboratory_id="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccione...</option>
+                        <option *ngFor="let laboratory_id of laboratories">{{laboratory_id.name}}</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label>Estado</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventory.status_id" name="status_id" #status_id="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccione...</option>
+                        <option *ngFor="let status_id of status">{{status_id.name}}</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Examinar archivo</label>
+                        <input type="file" [(ngModel)]="inventory.imagen" name="imagen" #imagen="ngModel" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" (click)="saveInventory()">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestion de producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <label for="">Miligramos</label>
+                <input type="number" class="form-control" min="0">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control">
+                <label for="">Descripcion</label>
+                <textarea class="form-control"></textarea>
+                <label for="">Fecha de ingreso</label>
+                <input type="date" class="form-control">
+                <label for="">Fecha de vencimiento</label>
+                <input type="date" class="form-control">
+                <label for="">codigo de lote</label>
+                <input type="text" class="form-control">
+                <label for="">Cantidad</label>
+                <input type="number" class="form-control" min="0">
+                <label for="">Precio</label>
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                </div>
+                <div class="input-group-prepend">
+                    <label>Laboratorio</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                <div class="input-group-prepend">
+                    <label>Estante</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                <div class="input-group-prepend">
+                    <label>Proveedor</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                <div class="input-group-prepend">
+                    <label>Proveedor ciudad</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                <div class="input-group-prepend">
+                    <label>Proveedor departamento</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                <div class="input-group-prepend">
+                    <label>Tipo producto</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>

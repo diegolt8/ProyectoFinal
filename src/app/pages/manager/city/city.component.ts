@@ -121,7 +121,6 @@ export class CityComponent implements OnInit {
     postObject.append('description', this.cityEdit.description);
     postObject.append('department_id', this.cityEdit.department_id);
     postObject.append('id', this.cityEdit.id);
-    console.log(this.cityEdit);
 
     this.cityService.editCity(postObject).subscribe(data => {
       let res: any;
@@ -168,7 +167,7 @@ export class CityComponent implements OnInit {
     postObject.append('description', this.city.description);
     postObject.append('department_id', this.city.department_id);
     postObject.append('id', this.city.id);
-    console.log(this.city);
+
     this.cityService.saveCity(postObject).subscribe(data => {
       let res: any;
       res = data;

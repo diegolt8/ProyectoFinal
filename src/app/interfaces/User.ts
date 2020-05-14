@@ -1,4 +1,5 @@
 export interface ModelUsuario {
+    res: string;
     id: number;
     rol_id: number;
     names: string;

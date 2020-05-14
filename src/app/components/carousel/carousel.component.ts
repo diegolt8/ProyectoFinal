@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import $ from "jquery";
+import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
@@ -7,9 +8,10 @@ import $ from "jquery";
 })
 export class CarouselComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
+    this.loginService.hiddenNavbar = true;
   }
 
 }

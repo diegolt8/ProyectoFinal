@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 
 export class LoginService {
     hiddenNavbar = true;
-
+    login = false;
+    user = {};
     constructor() {
         
     }

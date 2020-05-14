@@ -2,79 +2,34 @@
     <div class="row">
         <form class="form-inline mt-5">
             <div class="md-form my-0">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                <input class="form-control" type="text" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" placeholder="Search" aria-label="Search">
             </div>
             <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
         </form>
         <table class="table mt-5">
-            <thead class="bg-warning">
+            <thead class="bg-primary">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">nombre</th>
-                    <th scope="col">nit</th>
-                    <th scope="col">direccion</th>
-                    <th scope="col">ciudad</th>
-                    <th scope="col">departamento</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Nit</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Ciudad</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                <tr *ngFor="let provider of providers |  paginate: {itemsPerPage: 6, currentPage: actualPage} | filter: FilterPipe">
+                    <td>{{provider.name}}</td>
+                    <td>{{provider.nit}}</td>
+                    <td>{{provider.address}}</td>
+                    <td>{{provider.city_id}}</td>
+                    <td><button class="btn btn-primary" (click)="findProvider(provider.id)" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="bg-transparent text-center mt-5 mb-5">
+        <pagination-controls class="my-pagination" (pageChange)="actualPage=$event">
+        </pagination-controls>
     </div>
 </div>
 
@@ -83,6 +38,39 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo proveedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="provider.name" name="name" #name="ngModel" type="text" class="form-control">
+                    <label for="nit">Nit</label>
+                    <input [(ngModel)]="provider.nit" name="nit" #nit="ngModel" type="text" class="form-control">
+                    <label for="address">Direccion</label>
+                    <input [(ngModel)]="provider.address" class="form-control" name="address" #address="ngModel" type="text">
+                    <div class="input-group-prepend">
+                        <label>Ciudad</label>
+                    </div>
+                    <select [(ngModel)]="provider.city_id" name="city_id" #city_id="ngModel" class="custom-select" id="inputGroupSelect01">
+                    <option selected>Seleccione</option>
+                    <option *ngFor="let city_id of cities">{{city_id.name}}</option>
+                  </select>
+                    <div class="modal-footer">
+                        <button type="submit" (click)="saveProvider()" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestion de proveedor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -103,48 +91,6 @@
                     <option value="3">Three</option>
                   </select>
                 <div class="input-group-prepend">
-                    <label>Departamento</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Gestion de proveedor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-            </div>
-            <div class="modal-body">
-                <label for=" ">Nombre</label>
-                <input type="text" class="form-control">
-                <label for=" ">Nit</label>
-                <input type="text" class="form-control">
-                <label for=" ">Direccion</label>
-                <div class="input-group-prepend">
-                    <label>Ciudad</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <div class="input-group-prepend ">
                     <label>Departamento</label>
                 </div>
                 <select class="custom-select" id="inputGroupSelect01">

@@ -26,6 +26,7 @@ import { StatusComponent } from './pages/manager/status/status.component';
 import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FilterPipe } from 'src/pipes/filter.pipe';
+import { StorageService } from './services/storage.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { FilterPipe } from 'src/pipes/filter.pipe';
   providers: [
     FormBuilder,
     DatePipe,
-    FilterPipe
+    FilterPipe,
+    StorageService
   ],
   bootstrap: [AppComponent]
 })

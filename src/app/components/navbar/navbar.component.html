@@ -8,6 +8,9 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="row justify-content-center">
+                <a *ngFor="let menu of menus" class="mt-2 mx-2">{{menu}}</a>
+            </div>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mt-2" style="color: white;" type="submit" (click)="login()">
                     Inicio Sesion

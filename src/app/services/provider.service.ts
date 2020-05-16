@@ -13,7 +13,7 @@ export class ProviderService {
     constructor(private http: HttpClient, private helperService: HelperService) { }
 
     getProvider() {
-        return this.http.get<ModelProvider>(this.url + '?action=list&token=' + this.helperService.generarToken());
+        return this.http.get<any>(this.url + '?action=list&token=' + this.helperService.generarToken());
     }
 
     saveProvider(postData: any) {

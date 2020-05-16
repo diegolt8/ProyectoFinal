@@ -1,22 +1,22 @@
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="#">
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button id="btnNavbar" type="submit" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <img src="./../../../assets/img/navbar.png" alt="">
+        </button>
+        </div>
+        <a class="navbar-brand justify-content-md-center">
             <img class="logo" src="./../../../assets/img/logon.png" alt="">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="row justify-content-center">
-                <a *ngFor="let menu of menus" class="mt-2 mx-2">{{menu}}</a>
-            </div>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item mt-2" style="color: white;" type="submit" (click)="login()">
-                    Inicio Sesion
-                    <img src="./../../../assets/img/log-in.png">
+        <div class="collapse navbar-collapse mt-2" id="myNavbar">
+            <ul class="nav navbar-nav mb-4">
+                <li *ngFor="let menu of menus">
+                    <a *ngIf="storageService.isAuthenticated()" style="text-decoration: none;" [routerLink]="menu" class="mt-4 mx-2 text-light">{{menu}}</a>
                 </li>
             </ul>
         </div>
+        <button *ngIf="!storageService.isAuthenticated()" (click)="login()" type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal">iniciar sesion</button>
+        <button *ngIf="storageService.isAuthenticated()" (click)="logout()" type="button" class="btn btn-outline-danger">cerrar sesion</button>
     </div>
 </nav>

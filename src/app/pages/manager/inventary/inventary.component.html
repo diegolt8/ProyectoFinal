@@ -23,8 +23,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let inventory of inventories">
-                        <td>{{inventory.miligrams}}</td>
+                    <tr *ngFor="let inventory of inventories | paginate: {itemsPerPage: 6, currentPage: actualPage} | filter: FilterPipe">
+                        <td>{{inventory.milligrams}}</td>
                         <td>{{inventory.name}}</td>
                         <td>{{inventory.description}}</td>
                         <td>{{inventory.admissiondate}}</td>
@@ -57,7 +57,7 @@
             <div class="modal-body">
                 <form>
                     <label for="miligrams">Miligramos</label>
-                    <input type="number" [(ngModel)]="inventory.miligrams" name="miligrams" #miligrams="ngModel" class="form-control" min="0">
+                    <input type="number" [(ngModel)]="inventory.milligrams" name="milligrams" #milligrams="ngModel" class="form-control" min="0">
                     <label for="name">Nombre</label>
                     <input [(ngModel)]="inventory.name" name="name" #name="ngModel" type="text" class="form-control">
                     <label for="description">Descripcion</label>
@@ -133,83 +133,69 @@
           </button>
             </div>
             <div class="modal-body">
-                <label for="">Miligramos</label>
-                <input type="number" class="form-control" min="0">
-                <label for="">Nombre</label>
-                <input type="text" class="form-control">
-                <label for="">Descripcion</label>
-                <textarea class="form-control"></textarea>
-                <label for="">Fecha de ingreso</label>
-                <input type="date" class="form-control">
-                <label for="">Fecha de vencimiento</label>
-                <input type="date" class="form-control">
-                <label for="">codigo de lote</label>
-                <input type="text" class="form-control">
-                <label for="">Cantidad</label>
-                <input type="number" class="form-control" min="0">
-                <label for="">Precio</label>
-                <div class="input-group-prepend">
-                    <span class="input-group-text">$</span>
-                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
-                </div>
-                <div class="input-group-prepend">
-                    <label>Laboratorio</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <div class="input-group-prepend">
-                    <label>Estante</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <div class="input-group-prepend">
-                    <label>Proveedor</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <div class="input-group-prepend">
-                    <label>Proveedor ciudad</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <div class="input-group-prepend">
-                    <label>Proveedor departamento</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <div class="input-group-prepend">
-                    <label>Tipo producto</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <form>
+                    <label for="miligrams">Miligramos</label>
+                    <input type="number" [(ngModel)]="inventoryEdit.milligrams" name="milligramsEdit" #milligramsEdit="ngModel" class="form-control" min="0">
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="inventoryEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
+                    <label for="description">Descripcion</label>
+                    <textarea [(ngModel)]="inventoryEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" class="form-control"></textarea>
+                    <label for="admissiondate">Fecha de ingreso</label>
+                    <input type="date" [(ngModel)]="inventoryEdit.admissiondate" name="admissiondateEdit" #admissiondateEdit="ngModel" class="form-control">
+                    <label for="expirationdate">Fecha de vencimiento</label>
+                    <input type="date" [(ngModel)]="inventoryEdit.expirationdate" name="expirationdateEdit" #expirationdateEdit="ngModel" class="form-control">
+                    <label for="lotecode">codigo de lote</label>
+                    <input type="text" [(ngModel)]="inventoryEdit.lotecode" name="lotecodeEdit" #lotecodeEdit="ngModel" class="form-control">
+                    <label for="quantity">Cantidad</label>
+                    <input type="number" [(ngModel)]="inventoryEdit.quantity" name="quantityEdit" #quantityEdit="ngModel" class="form-control" min="0">
+                    <label for="price">Precio</label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" [(ngModel)]="inventoryEdit.price" name="priceEdit" #priceEdit="ngModel" aria-label="Amount (to the nearest dollar)">
+                    </div>
+                    <div class="input-group-prepend">
+                        <label>Proveedor</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventoryEdit.provider_id" name="provider_idEdit" #provider_idEdit="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccione...</option>
+                        <option *ngFor="let provider_id of providers">{{provider_id.name}}</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label>Estante</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventoryEdit.shelf_id" name="shelf_idEdit" #shelf_idEdit="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccionee...</option>
+                        <option *ngFor="let shelf_id of shelfs">{{shelf_id.name}}</option>
+                     </select>
+                    <div class="input-group-prepend">
+                        <label>Tipo producto</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventoryEdit.typeproduct_id" name="typeproduct_idEdit" #typeproduct_idEdit="ngModel" id="inputGroupSelect01">
+                         <option selected>Seleccione...</option>
+                         <option *ngFor="let typeproduct_id of typeproducts">{{typeproduct_id.name}}</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label>Laboratorio</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventoryEdit.laboratory_id" name="laboratory_idEdit" #laboratory_idEdit="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccione...</option>
+                        <option *ngFor="let laboratory_id of laboratories">{{laboratory_id.name}}</option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label>Estado</label>
+                    </div>
+                    <select class="custom-select" [(ngModel)]="inventoryEdit.status_id" name="status_idEdit" #status_idEdit="ngModel" id="inputGroupSelect01">
+                        <option selected>Seleccione...</option>
+                        <option *ngFor="let status_id of status">{{status_id.name}}</option>
+                    </select>
+                    <div class="form-group">
+                        <label>Examinar archivo</label>
+                        <input type="file" [(ngModel)]="inventoryEdit.imagen" name="imagenEdit" #imagenEdit="ngModel" class="form-control-file">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" (click)="editInventory()">Editar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

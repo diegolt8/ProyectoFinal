@@ -10,10 +10,10 @@ import { LoginService } from 'src/app/services/login.service';
 export class HomeComponent implements OnInit {
 
   constructor(private router: Router, private loginService: LoginService) {
-    this.loginService.hiddenNavbar = true;
    }
 
   ngOnInit() {
+    this.loginService.hiddenNavbar = true;
   }
 
   viewSale() {

@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'departamento', component: DepartmentComponent },
   { path: 'laboratorio', component: LaboratoriesComponent },
   { path: 'rol', component: RolComponent },
-  { path: 'estatus', component: StatusComponent },
+  { path: 'estado', component: StatusComponent },
   { path: 'tipoProducto', component: TypeproductComponent },
   { path: 'login', component: LoginComponent }
 ];

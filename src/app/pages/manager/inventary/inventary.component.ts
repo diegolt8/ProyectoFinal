@@ -6,6 +6,9 @@ import { LaboratoryService } from 'src/app/services/laboratory.service';
 import { StatusService } from 'src/app/services/status.service';
 import { InventoryService } from 'src/app/services/inventory.service';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
+
+const { MICROSERVICE_URL } = environment;
 
 @Component({
   selector: 'app-inventary',
@@ -21,6 +24,8 @@ export class InventaryComponent implements OnInit {
     private statusService: StatusService,
     private inventoryService: InventoryService) {}
 
+    urlImage = `${MICROSERVICE_URL}/ProyectoFinalBackend/`;
+
   ngOnInit(): void {
     this.getStatus();
     this.getTypeProducts();
@@ -34,8 +39,10 @@ export class InventaryComponent implements OnInit {
 
   actualPage = 1;
 
+  imgOld = '';
+
   inventory: any = {
-    miligrams: 0,
+    milligrams: 0,
     name: '',
     description: '',
     admissiondate: '',
@@ -53,7 +60,7 @@ export class InventaryComponent implements OnInit {
   }
 
   inventoryEdit: any = {
-    miligrams: 0,
+    milligrams: 0,
     name: '',
     description: '',
     admissiondate: '',
@@ -61,14 +68,16 @@ export class InventaryComponent implements OnInit {
     lotecode: '',
     quantity: 0,
     price: '',
-    provider_id: 0,
-    shelf_id: 0,
-    typeproduct_id: 0,
-    laboratory_id: 0,
-    status_id: 0,
+    provider_id: 1,
+    shelf_id: 1,
+    typeproduct_id: 1,
+    laboratory_id: 1,
+    status_id: 1,
     imagen: '',
     id: 0
   }
+
+  image: any = null;
 
   providers: any = [];
   shelfs: any = [];
@@ -77,7 +86,9 @@ export class InventaryComponent implements OnInit {
   status: any = [];
   inventories: any = [];
 
-  getInventories() {
+  async getInventories() {
+    const invent = await this.inventoryService.getInventory().toPromise();
+    this.inventories = JSON.parse(invent.data);
     this.inventoryService.getInventory().subscribe(data => {
       this.inventories = JSON.parse(JSON.parse(JSON.stringify(data)).data);
       this.inventories.forEach(inventory => {
@@ -97,6 +108,11 @@ export class InventaryComponent implements OnInit {
                 if (inventory.status_id === status.id) {
                   inventory.status_id = status.name;
                 }
+                this.typeproducts.forEach(type => {
+                  if (inventory.typeproduct_id === type.id) {
+                    inventory.typeproduct_id = type.name;
+                  }
+                })
               });
             });
           });
@@ -113,7 +129,9 @@ export class InventaryComponent implements OnInit {
     }
   }
 
-  getProviders() {
+  async getProviders() {
+    const provider = await this.providerService.getProvider().toPromise();
+    this.providers = JSON.parse(provider.data);
     this.providerService.getProvider().subscribe(data => {
       this.providers = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
@@ -173,7 +191,7 @@ export class InventaryComponent implements OnInit {
     const postObject = new FormData();
 
     postObject.append('action', 'save');
-    postObject.append('miligrams', this.inventory.miligrams);
+    postObject.append('milligrams', this.inventory.milligrams);
     postObject.append('name', this.inventory.name);
     postObject.append('description', this.inventory.description);
     postObject.append('admissiondate', this.inventory.admissiondate);
@@ -212,6 +230,119 @@ export class InventaryComponent implements OnInit {
         })
       } else if (res.code === '3') {
         console.log(data);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    });
+  }
+
+  editInventory() {
+    this.providers.forEach(element => {
+      if (element.name === this.inventoryEdit.provider_id) {
+        this.inventoryEdit.provider_id = element.id;
+      }
+    });
+    this.typeproducts.forEach(element => {
+      if (element.name === this.inventoryEdit.typeproduct_id) {
+        this.inventoryEdit.typeproduct_id = element.id;
+      }
+    });
+    this.shelfs.forEach(element => {
+      if (element.name === this.inventoryEdit.shelf_id) {
+        this.inventoryEdit.shelf_id = element.id;
+      }
+    });
+    this.laboratories.forEach(element => {
+      if (element.name === this.inventoryEdit.laboratory_id) {
+        this.inventoryEdit.laboratory_id = element.id;
+      }
+    });
+    this.status.forEach(element => {
+      if (element.name === this.inventoryEdit.status_id) {
+        this.inventoryEdit.status_id = element.id;
+      }
+    });
+    const postObject = new FormData();
+
+    postObject.append('action', 'save');
+    postObject.append('milligrams', this.inventoryEdit.milligrams);
+    postObject.append('name', this.inventoryEdit.name);
+    postObject.append('description', this.inventoryEdit.description);
+    postObject.append('admissiondate', this.inventoryEdit.admissiondate);
+    postObject.append('expirationdate', this.inventoryEdit.expirationdate);
+    postObject.append('lotecode', this.inventoryEdit.lotecode);
+    postObject.append('quantity', this.inventoryEdit.quantity);
+    postObject.append('price', this.inventoryEdit.price);
+    postObject.append('provider_id', this.inventoryEdit.provider_id);
+    postObject.append('shelf_id', this.inventoryEdit.shelf_id);
+    postObject.append('typeproduct_id', this.inventoryEdit.typeproduct_id);
+    postObject.append('laboratory_id', this.inventoryEdit.laboratory_id);
+    postObject.append('status_id', this.inventoryEdit.status_id);
+    postObject.append('imagen', this.inventoryEdit.imagen);
+    postObject.append('id', this.inventoryEdit.id);
+
+    console.log(postObject);
+
+    this.inventoryService.editInventory(postObject).subscribe(data => {
+      let res: any;
+      res = data;
+      if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se editó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getInventories();
+      } else if (res.code === '2') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Oops! no se pudo editar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        console.log(data);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    });
+  }
+
+  deleteInventory() {
+    this.inventoryService.deleteInventory(this.inventoryEdit.id).subscribe(data => {
+      let res: any;
+      res = data;
+      if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getInventories();
+      } else if (res.code === '2') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo eliminar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
         Swal.fire({
           position: 'top-end',
           icon: 'warning',

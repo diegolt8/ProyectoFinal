@@ -12,10 +12,12 @@ export class NavbarComponent implements OnInit {
 
   user: any = {};
 
-  constructor(private router: Router, private storageService: StorageService) { 
+  constructor(private router: Router, public storageService: StorageService) {
     this.user = storageService.getCurrentSession();
-    this.getMenus(this.user.rol_id);
-   }
+    if (this.user !== null) {
+      this.getMenus(this.user.rol_id);
+    }
+  }
 
   menus: any = [];
 
@@ -34,27 +36,27 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  logout() {
+    this.storageService.logout();
+  }
+
   getMenus(user) {
     if (user === '2') {
-      this.menus.push('city',
-        'department',
-        'detailsale',
-        'inventory',
-        'invoice',
-        'laboratory',
-        'provider',
+      this.menus.push('ciudad',
+        'departamento',
+        'inventario',
+        'laboratorio',
+        'proveedor',
         'rol',
-        'sale',
-        'shelf',
-        'state',
-        'typeproduct',
-        'user');
+        'estante',
+        'estado',
+        'tipoProducto',
+        'usuario');
     } else if ('1') {
       this.menus.push(
-      'inventory',
-      'user');
+        'inventario',
+        'usuario');
     }
-    console.log(this.menus);
   }
 
 }

@@ -13,12 +13,12 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('modalSave', {static: false}) private closeModal: ElementRef;
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
 
   constructor(private loginService: LoginService, private cityService: CityService,
-     private userService: UserService,
-     private storageService: StorageService,
-     private router: Router) {
+    private userService: UserService,
+    private storageService: StorageService,
+    private router: Router) {
     this.loginService.hiddenNavbar = false;
     this.getCities();
     this.getUsers();
@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
   getUsers() {
     this.userService.getUser().subscribe(data => {
       if (data.res !== 'NotInfo') {
-      this.users = JSON.parse(JSON.parse(JSON.stringify(data)).data);
-      console.log(this.users);
+        this.users = JSON.parse(JSON.parse(JSON.stringify(data)).data);
+        console.log(this.users);
       } else {
         this.users = [];
       }
@@ -61,32 +61,31 @@ export class LoginComponent implements OnInit {
     city_id: 0,
     admissiondate: '',
     id: 0
-};
+  };
 
   cities: any = [];
 
   signUp() {
-    console.log(this.users);
     this.users.forEach(async element => {
-        if (element.documentnumber === this.loginUser.documentnumber) {
-          console.log('Entra al if');
-          Object.assign(element, { passwordLogin: this.loginUser.password, ...element });
-          const pass = await this.userService.login(element);
-          console.log(pass);
-          if (pass) {
-            this.failLogin = true;
-            this.storageService.login = true;
-            this.loginService.user = element;
-            this.storageService.setCurrentSession(element);
-            this.router.navigate(['home']);
-          } else {
-            Swal.fire(
-              'error'
-            );
-          }
+      if (element.documentnumber === this.loginUser.documentnumber) {
+        Object.assign(element, { passwordLogin: this.loginUser.password, ...element });
+        const pass = await this.userService.login(element);
+        if (pass) {
+          this.failLogin = true;
+          this.storageService.login = true;
+          this.loginService.user = element;
+          this.storageService.setCurrentSession(element);
+          this.router.navigate(['home']);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
         }
-      });
-    }
+      }
+    });
+  }
 
   getCities() {
     this.cityService.getCity().subscribe(data => {

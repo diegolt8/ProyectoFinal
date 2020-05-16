@@ -76,33 +76,25 @@
           </button>
             </div>
             <div class="modal-body">
-                <label for="">Nombre</label>
-                <input type="text" class="form-control">
-                <label for="">Nit</label>
-                <input type="text" class="form-control">
-                <label for="">Direccion</label>
-                <div class="input-group-prepend">
-                    <label>Ciudad</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="providerEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
+                    <label for="nit">Nit</label>
+                    <input [(ngModel)]="providerEdit.nit" name="nitEdit" #nitEdit="ngModel" type="text" class="form-control">
+                    <label for="address">Direccion</label>
+                    <input [(ngModel)]="providerEdit.address" class="form-control" name="addressEdit" #addressEdit="ngModel" type="text">
+                    <div class="input-group-prepend">
+                        <label>Ciudad</label>
+                    </div>
+                    <select [(ngModel)]="providerEdit.city_id" name="city_idEdit" #city_idEdit="ngModel" class="custom-select" id="inputGroupSelect01">
+                    <option selected>Seleccione</option>
+                    <option *ngFor="let city_id of cities">{{city_id.name}}</option>
                   </select>
-                <div class="input-group-prepend">
-                    <label>Departamento</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                    <div class="modal-footer">
+                        <button type="button" (click)="editProvider()" class="btn btn-warning" data-dismiss="modal">Editar</button>
+                        <button type="button" (click)="deleteProvider()" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

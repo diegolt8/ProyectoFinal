@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HelperService } from './helper.service';
-import { ModelInventory } from '../interfaces/Inventory';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +13,7 @@ export class InventoryService {
     constructor(private http: HttpClient, private helperService: HelperService) { }
 
     getInventory() {
-        return this.http.get<ModelInventory>(this.url + '?action=list&token=' +
+        return this.http.get<any>(this.url + '?action=list&token=' +
             this.helperService.generarToken());
     }
 

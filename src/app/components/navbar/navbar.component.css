@@ -2,3 +2,9 @@
     margin-top: -62px;
     margin-bottom: -62px;
 }
+
+#btnNavbar {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}

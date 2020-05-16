@@ -14,6 +14,7 @@ export class ProvidersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProviders();
+    this.getCitys();
   }
 
   FilterPipe: any = '';
@@ -96,7 +97,7 @@ export class ProvidersComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-        this.getCitys();
+        this.getProviders();
       } else if (res.code === '2') {
         Swal.fire({
           position: 'top-end',
@@ -117,4 +118,84 @@ export class ProvidersComponent implements OnInit {
     });
   }
 
+  editProvider() {
+    this.cities.forEach(element => {
+      if (element.name === this.providerEdit.city_id) {
+        this.providerEdit.city_id = element.id;
+      }
+    });
+    const postObject = new FormData();
+    postObject.append('action', 'update');
+    postObject.append('name', this.providerEdit.name);
+    postObject.append('nit', this.providerEdit.nit);
+    postObject.append('address', this.providerEdit.address);
+    postObject.append('city_id', this.providerEdit.city_id);
+    postObject.append('id', this.providerEdit.id);
+
+    this.providerService.editProvider(postObject).subscribe(data => {
+      let res: any;
+      res = data;
+      console.log(data);
+      if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se editó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getProviders();
+      } else if (res.code === '2') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo editar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    });
+  }
+
+  deleteProvider() {
+    this.providerService.deleteProvider(this.providerEdit.id).subscribe(data => {
+      let res: any;
+      res = data;
+      console.log(data);
+      if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getProviders();
+      } else if (res.code === '2') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Oops! no se pudo eliminar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
+  }
 }

@@ -14,7 +14,7 @@ export class TypeProductService {
     constructor(private http: HttpClient, private helperService: HelperService) { }
 
     getTypeProduct() {
-        return this.http.get<ModelStatus>(this.url + '?action=list&token=' +
+        return this.http.get<any>(this.url + '?action=list&token=' +
             this.helperService.generarToken());
     }
 

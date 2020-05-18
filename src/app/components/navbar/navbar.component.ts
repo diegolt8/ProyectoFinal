@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import $ from 'jquery';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-navbar',
@@ -50,7 +51,7 @@ export class NavbarComponent implements OnInit {
         'rol',
         'estante',
         'estado',
-        'tipoProducto',
+        'tipo producto',
         'usuario');
     } else if ('1') {
       this.menus.push(

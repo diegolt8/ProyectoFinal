@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { LaboratoryService } from 'src/app/services/laboratory.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-laboratories',
@@ -9,11 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class LaboratoriesComponent implements OnInit {
 
-  constructor(private laboratoryService: LaboratoryService) {
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
+  constructor(private laboratoryService: LaboratoryService,
+    private storageService: StorageService,
+    private router: Router) {
     this.getlaboratories();
   }
 
+  user: any;
   ngOnInit(): void {
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getlaboratories();
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   
@@ -80,6 +93,7 @@ export class LaboratoriesComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   editlaboratory() {
@@ -126,6 +140,7 @@ export class LaboratoriesComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   savelaboratory() {
@@ -168,5 +183,6 @@ export class LaboratoriesComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 }

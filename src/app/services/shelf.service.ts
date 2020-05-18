@@ -14,7 +14,7 @@ export class shelfService {
     constructor(private http: HttpClient, private helperService: HelperService) { }
 
     getShelf() {
-        return this.http.get<ModelShelf>(this.url + '?action=list&token=' +
+        return this.http.get<any>(this.url + '?action=list&token=' +
             this.helperService.generarToken());
     }
 

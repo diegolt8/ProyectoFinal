@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'laboratorio', component: LaboratoriesComponent },
   { path: 'rol', component: RolComponent },
   { path: 'estado', component: StatusComponent },
-  { path: 'tipoProducto', component: TypeproductComponent },
+  { path: 'tipo producto', component: TypeproductComponent },
   { path: 'login', component: LoginComponent }
 ];
 

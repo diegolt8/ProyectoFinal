@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
     this.userService.getUser().subscribe(data => {
       if (data.res !== 'NotInfo') {
         this.users = JSON.parse(JSON.parse(JSON.stringify(data)).data);
-        console.log(this.users);
       } else {
         this.users = [];
       }

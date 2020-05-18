@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RolService } from 'src/app/services/rol.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rol',
@@ -9,11 +11,21 @@ import Swal from 'sweetalert2';
 })
 export class RolComponent implements OnInit {
 
-  constructor(private rolService: RolService) {
-    this.getRoles();
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
+  user: any;
+  constructor(private rolService: RolService,
+    private storageService: StorageService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getRoles();
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   FilterPipe: any = '';
@@ -79,6 +91,7 @@ export class RolComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   editRol() {
@@ -125,6 +138,7 @@ export class RolComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   saveRol() {
@@ -167,5 +181,6 @@ export class RolComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 }

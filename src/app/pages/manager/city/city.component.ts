@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CityService } from 'src/app/services/city.service';
 import { DepartmentService } from 'src/app/services/department.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-city',
@@ -10,13 +12,25 @@ import Swal from 'sweetalert2';
 })
 export class CityComponent implements OnInit {
 
-  constructor(private cityService: CityService, private departmentService: DepartmentService) {
+  constructor(private cityService: CityService,
+              private departmentService: DepartmentService,
+              private storageService: StorageService,
+              private router: Router) {
     this.getCitys();
     this.getDepartments();
   }
 
-  ngOnInit(): void {
+  user: any;
 
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
+  ngOnInit(): void {
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getCitys();
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   FilterPipe: any = '';
@@ -66,7 +80,6 @@ export class CityComponent implements OnInit {
     this.cityService.deleteCity(this.cityEdit.id).subscribe(data => {
       let res: any;
       res = data;
-      console.log(data);
       if (res.code === '1') {
         Swal.fire({
           position: 'top-end',
@@ -94,6 +107,7 @@ export class CityComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   getDepartments() {
@@ -152,6 +166,7 @@ export class CityComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   saveCity() {
@@ -199,5 +214,6 @@ export class CityComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 }

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { shelfService } from 'src/app/services/shelf.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shelfs',
@@ -9,15 +11,25 @@ import Swal from 'sweetalert2';
 })
 export class ShelfsComponent implements OnInit {
 
-  constructor(private shelfService: shelfService) {
-    this.getShelfs();
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
+  constructor(private shelfService: shelfService, private storageService: StorageService, private router: Router) {
+
   }
 
   FilterPipe: any = '';
 
   actualPage = 1;
 
+  user: any;
+
   ngOnInit(): void {
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getShelfs();
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   shelf: any = {
@@ -80,6 +92,7 @@ export class ShelfsComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   editShelf() {
@@ -125,6 +138,7 @@ export class ShelfsComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   saveShelf() {
@@ -165,5 +179,6 @@ export class ShelfsComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 }

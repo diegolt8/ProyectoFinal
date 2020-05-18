@@ -14,7 +14,7 @@ export class DepartmentService {
     constructor(private http: HttpClient, private helperService: HelperService) { }
 
     getDepartment() {
-        return this.http.get<ModelDepartment>(this.url + '?action=list&token=' +
+        return this.http.get<any>(this.url + '?action=list&token=' +
             this.helperService.generarToken());
     }
 

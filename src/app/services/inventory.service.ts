@@ -27,8 +27,8 @@ export class InventoryService {
         return this.http.post(this.url, postData);
     }
 
-    deleteInventory(id: any) {
-        return this.http.delete(this.url + '?action=delete&id=' + id + '&token=' +
+    deleteInventory(id: any, img:any) {
+        return this.http.delete(this.url + '?action=delete&nameImg=' + img + '&id=' + id + '&token=' +
             this.helperService.generarToken());
     }
 

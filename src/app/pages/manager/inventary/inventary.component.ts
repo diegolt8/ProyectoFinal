@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProviderService } from 'src/app/services/provider.service';
 import { shelfService } from 'src/app/services/shelf.service';
 import { TypeProductService } from 'src/app/services/typeproduct.service';
@@ -7,6 +7,8 @@ import { StatusService } from 'src/app/services/status.service';
 import { InventoryService } from 'src/app/services/inventory.service';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 const { MICROSERVICE_URL } = environment;
 
@@ -17,22 +19,49 @@ const { MICROSERVICE_URL } = environment;
 })
 export class InventaryComponent implements OnInit {
 
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
   constructor(private providerService: ProviderService,
     private shelfService: shelfService,
     private typeProductService: TypeProductService,
     private laboratoryService: LaboratoryService,
     private statusService: StatusService,
-    private inventoryService: InventoryService) {}
+    private inventoryService: InventoryService,
+    private storageService: StorageService,
+    private router: Router) {
+    this.getInventories();
+    this.getProviders();
+    this.getShelfs();
+    this.getTypeProducts();
+    this.getLaboratories();
+    this.getStatus();
+  }
 
-    urlImage = `${MICROSERVICE_URL}/ProyectoFinalBackend/`;
+  urlImage = `${MICROSERVICE_URL}/ProyectoFinalBackend/`;
+
+  user: any;
 
   ngOnInit(): void {
-    this.getStatus();
-    this.getTypeProducts();
-    this.getShelfs();
-    this.getProviders();
-    this.getInventories();
-    this.getLaboratories();
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getInventories();
+    } else {
+      this.router.navigate(['home']);
+    }
+  }
+
+  changeListener($event): void {
+    this.readThis($event.target);
+  }
+
+  readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.image = myReader.result;
+    };
+    myReader.readAsDataURL(file);
   }
 
   FilterPipe: any = '';
@@ -40,6 +69,7 @@ export class InventaryComponent implements OnInit {
   actualPage = 1;
 
   imgOld = '';
+
 
   inventory: any = {
     milligrams: 0,
@@ -92,6 +122,8 @@ export class InventaryComponent implements OnInit {
     this.inventoryService.getInventory().subscribe(data => {
       this.inventories = JSON.parse(JSON.parse(JSON.stringify(data)).data);
       this.inventories.forEach(inventory => {
+        const url = this.urlImage + inventory.imagen;
+        inventory.imagen = url;
         this.providers.forEach(provider => {
           if (inventory.provider_id === provider.id) {
             inventory.provider_id = provider.name;
@@ -137,25 +169,33 @@ export class InventaryComponent implements OnInit {
     });
   }
 
-  getShelfs() {
+  async getShelfs() {
+    const shelf = await this.shelfService.getShelf().toPromise();
+    this.shelfs = JSON.parse(shelf.data);
     this.shelfService.getShelf().subscribe(data => {
       this.shelfs = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
   }
 
-  getTypeProducts() {
+  async getTypeProducts() {
+    const type = await this.typeProductService.getTypeProduct().toPromise();
+    this.typeproducts = JSON.parse(type.data);
     this.typeProductService.getTypeProduct().subscribe(data => {
       this.typeproducts = JSON.parse(JSON.parse(JSON.stringify(data)).data)
     });
   }
 
-  getLaboratories() {
+  async getLaboratories() {
+    const laboratory = await this.laboratoryService.getLaboratory().toPromise();
+    this.laboratories = JSON.parse(laboratory.data);
     this.laboratoryService.getLaboratory().subscribe(data => {
       this.laboratories = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
   }
 
-  getStatus() {
+  async getStatus() {
+    const status = await this.statusService.getStatus().toPromise();
+    this.status = JSON.parse(status.data);
     this.statusService.getStatus().subscribe(data => {
       this.status = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
@@ -163,6 +203,14 @@ export class InventaryComponent implements OnInit {
 
 
   saveInventory() {
+
+    const url = this.inventory.imagen.substr(12, this.inventory.imagen.length);
+
+    if (this.image !== null) {
+      this.inventory.imagen = this.image.replace('data:image/;base64,', '');
+      console.log(this.inventory.imagen);
+    }
+
     this.providers.forEach(element => {
       if (element.name === this.inventory.provider_id) {
         this.inventory.provider_id = element.id;
@@ -205,8 +253,11 @@ export class InventaryComponent implements OnInit {
     postObject.append('laboratory_id', this.inventory.laboratory_id);
     postObject.append('status_id', this.inventory.status_id);
     postObject.append('imagen', this.inventory.imagen);
+    postObject.append('nameImg', url);
     postObject.append('id', this.inventory.id);
+    postObject.append('edit', 'true');
 
+    this.image = null;
 
     this.inventoryService.saveInventory(postObject).subscribe(data => {
       let res: any;
@@ -242,6 +293,21 @@ export class InventaryComponent implements OnInit {
   }
 
   editInventory() {
+
+    let edit = false;
+    let url = '';
+
+    if (this.image !== null) {
+      url = this.imgOld.substr(12, this.imgOld.length);
+      this.inventoryEdit.imagen = this.image.replace('data:image/;base64,', '');
+      edit = true;
+    } else {
+      url = this.inventoryEdit.imagen.substr(61, this.inventoryEdit.imagen.length);
+      const array = this.inventoryEdit.imagen.split('/');
+      this.inventoryEdit.imagen = array[4] + '/' + array[5] + '/' + array[6];
+      console.log(this.inventoryEdit.imagen);
+    }
+
     this.providers.forEach(element => {
       if (element.name === this.inventoryEdit.provider_id) {
         this.inventoryEdit.provider_id = element.id;
@@ -269,7 +335,7 @@ export class InventaryComponent implements OnInit {
     });
     const postObject = new FormData();
 
-    postObject.append('action', 'save');
+    postObject.append('action', 'update');
     postObject.append('milligrams', this.inventoryEdit.milligrams);
     postObject.append('name', this.inventoryEdit.name);
     postObject.append('description', this.inventoryEdit.description);
@@ -284,9 +350,10 @@ export class InventaryComponent implements OnInit {
     postObject.append('laboratory_id', this.inventoryEdit.laboratory_id);
     postObject.append('status_id', this.inventoryEdit.status_id);
     postObject.append('imagen', this.inventoryEdit.imagen);
+    postObject.append('nameImg', url);
     postObject.append('id', this.inventoryEdit.id);
+    postObject.append('edit', edit.toString());
 
-    console.log(postObject);
 
     this.inventoryService.editInventory(postObject).subscribe(data => {
       let res: any;
@@ -322,7 +389,10 @@ export class InventaryComponent implements OnInit {
   }
 
   deleteInventory() {
-    this.inventoryService.deleteInventory(this.inventoryEdit.id).subscribe(data => {
+
+    const nameImg = (this.inventoryEdit.imagen).split('/');
+
+    this.inventoryService.deleteInventory(this.inventoryEdit.id, nameImg[6]).subscribe(data => {
       let res: any;
       res = data;
       if (res.code === '1') {

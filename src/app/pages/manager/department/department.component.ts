@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DepartmentService } from 'src/app/services/department.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-department',
@@ -9,11 +11,23 @@ import Swal from 'sweetalert2';
 })
 export class DepartmentComponent implements OnInit {
 
-  constructor(private departmentService: DepartmentService) {
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
+  constructor(private departmentService: DepartmentService,
+    private storageService: StorageService,
+    private router: Router) {
     this.getDepartments();
   }
 
+  user: any;
+
   ngOnInit(): void {
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getDepartments();
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   FilterPipe: any = '';
@@ -34,7 +48,9 @@ export class DepartmentComponent implements OnInit {
 
   departments: any = [];
 
-  getDepartments() {
+  async getDepartments() {
+    const department = await this.departmentService.getDepartment().toPromise();
+    this.departments = JSON.parse(department.data);
     this.departmentService.getDepartment().subscribe(data => {
       this.departments = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
@@ -79,6 +95,7 @@ export class DepartmentComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   editDepartment() {
@@ -125,6 +142,7 @@ export class DepartmentComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   saveDepartment() {
@@ -166,6 +184,7 @@ export class DepartmentComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
 }

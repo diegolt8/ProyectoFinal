@@ -14,7 +14,7 @@ export class LaboratoryService {
     constructor(private http: HttpClient, private helperService: HelperService) { }
 
     getLaboratory() {
-        return this.http.get<ModelLaboratory>(this.url + '?action=list&token=' +
+        return this.http.get<any>(this.url + '?action=list&token=' +
             this.helperService.generarToken());
     }
 

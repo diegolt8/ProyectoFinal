@@ -112,7 +112,7 @@
                     </select>
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Examinar archivo</label>
-                        <input type="file" [(ngModel)]="inventory.imagen" name="imagen" #imagen="ngModel" class="form-control-file" id="exampleFormControlFile1">
+                        <input type="file" accept="image/*" (change)="changeListener($event)" [(ngModel)]="inventory.imagen" name="imagen" #imagen="ngModel" class="form-control-file" id="exampleFormControlFile1">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" (click)="saveInventory()">Guardar</button>
@@ -133,7 +133,7 @@
           </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form #formInventaryEdit="ngForm">
                     <label for="miligrams">Miligramos</label>
                     <input type="number" [(ngModel)]="inventoryEdit.milligrams" name="milligramsEdit" #milligramsEdit="ngModel" class="form-control" min="0">
                     <label for="name">Nombre</label>
@@ -164,7 +164,7 @@
                         <label>Estante</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventoryEdit.shelf_id" name="shelf_idEdit" #shelf_idEdit="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccionee...</option>
+                        <option selected>Seleccione...</option>
                         <option *ngFor="let shelf_id of shelfs">{{shelf_id.name}}</option>
                      </select>
                     <div class="input-group-prepend">
@@ -189,11 +189,15 @@
                         <option *ngFor="let status_id of status">{{status_id.name}}</option>
                     </select>
                     <div class="form-group">
+                        <img id="imagenres" [src]="inventoryEdit.imagen">
+                    </div>
+                    <div class="form-group">
                         <label>Examinar archivo</label>
-                        <input type="file" [(ngModel)]="inventoryEdit.imagen" name="imagenEdit" #imagenEdit="ngModel" class="form-control-file">
+                        <input accept="image/*" (change)="changeListener($event)" type="file" [(ngModel)]="imgOld" name="imgEdit" #imgEdit="ngModel" class="form-control-file">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" (click)="editInventory()">Editar</button>
+                        <button type="submit" class="btn btn-warning" (click)="editInventory()">Editar</button>
+                        <button type="submit" class="btn btn-danger" (click)="deleteInventory()">Eliminar</button>
                     </div>
                 </form>
             </div>

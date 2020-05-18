@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CityService } from 'src/app/services/city.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-providers',
@@ -10,11 +12,25 @@ import Swal from 'sweetalert2';
 })
 export class ProvidersComponent implements OnInit {
 
-  constructor(private cityService: CityService, private providerService: ProviderService) { this.getCitys(); }
+  @ViewChild('modalSave', { static: false }) private closeModal: ElementRef;
+
+  constructor(private cityService: CityService,
+    private providerService: ProviderService,
+    private storageService: StorageService,
+    private router: Router
+  ) { this.getCitys(); }
+
+
+  user: any;
 
   ngOnInit(): void {
-    this.getProviders();
-    this.getCitys();
+    this.user = this.storageService.getCurrentSession();
+    if (this.user != null) {
+      this.getProviders();
+      this.getCitys();
+    } else {
+      this.router.navigate(['home']);
+    }
   }
 
   FilterPipe: any = '';
@@ -116,6 +132,7 @@ export class ProvidersComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   editProvider() {
@@ -163,6 +180,7 @@ export class ProvidersComponent implements OnInit {
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   deleteProvider() {
@@ -196,6 +214,7 @@ export class ProvidersComponent implements OnInit {
           timer: 1500
         })
       }
-    })
+    });
+    this.closeModal.nativeElement.click();
   }
 }

@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 import { UserService } from 'src/app/services/user.service';
 import { CityService } from 'src/app/services/city.service';
 import { RolService } from 'src/app/services/rol.service';
-import { runInThisContext } from 'vm';
 import { StorageService } from 'src/app/services/storage.service';
 import { Router } from '@angular/router';
 
@@ -68,6 +67,8 @@ export class UsersComponent implements OnInit {
     id: 0
   };
 
+  newPassword: any = '';
+
   cities: any = [];
   users: any = [];
   roles: any = [];
@@ -112,12 +113,12 @@ export class UsersComponent implements OnInit {
     this.rolService.getRol().subscribe(data => {
       this.roles = JSON.parse(JSON.parse(JSON.stringify(data)).data);
       this.users.forEach(user => {
-        this.roles.forEach(rol => {
+        this.users.forEach(rol => {
           if (user.rol_id === rol.id) {
             user.rol_id = rol.name;
           }
-        });
-      });
+        })
+      })
     });
   }
 
@@ -151,72 +152,124 @@ export class UsersComponent implements OnInit {
     postObject.append('city_id', this.user.city_id);
     postObject.append('admissiondate', this.user.admissiondate);
     postObject.append('id', this.user.id);
+
     this.userService.saveUser(postObject).subscribe(data => {
       let res: any;
       res = data;
-      console.log(this.user);
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se registro satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
         })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se registró satisfactoriamente'
+        })
+        this.getUsers();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Oops! no se pudo registrar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo registrar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
-    this.closeModal.nativeElement.click();
   }
 
   deleteUser() {
     this.userService.deleteUser(this.userEdit.id).subscribe(data => {
       let res: any;
       res = data;
-      console.log(data);
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se eliminó satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente'
         })
         this.getUsers();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Oops! no se pudo eliminar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo eliminar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
-    this.closeModal.nativeElement.click();
   }
 
   editUser() {
@@ -227,6 +280,19 @@ export class UsersComponent implements OnInit {
         this.userEdit.city_id = element.id;
       }
     });
+
+    this.roles.forEach(element => {
+      if (element.name === this.userEdit.rol_id) {
+        this.userEdit.rol_id = element.id;
+      }
+    });
+
+    let modifica = false;
+
+    if (this.newPassword !== '') {
+      modifica = true;
+      this.userEdit.password = this.newPassword;
+    }
 
     postObject.append('action', 'update');
     postObject.append('name', this.userEdit.name);
@@ -242,36 +308,82 @@ export class UsersComponent implements OnInit {
     postObject.append('city_id', this.userEdit.city_id);
     postObject.append('admissiondate', this.userEdit.admissiondate);
     postObject.append('id', this.userEdit.id);
+    postObject.append('modifica', modifica.toString());
+
     this.userService.editUser(postObject).subscribe(data => {
       let res: any;
       res = data;
       console.log(this.user);
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se editó satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
         })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se editó satisfactoriamente'
+        })
+        this.getUsers();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Oops! no se pudo editar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo editar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
-    this.closeModal.nativeElement.click();
+  }
+
+  clear() {
+    this.user = {
+      name: [null],
+      lastname: [null],
+      documenttype: [null],
+      documentnumber: [null],
+      gender: [null],
+      age: 0,
+      birthdate: [null],
+      points: 0,
+      password: [null],
+      rol_id: 1,
+      city_id: 1,
+      admissiondate: [null],
+    }
   }
 }

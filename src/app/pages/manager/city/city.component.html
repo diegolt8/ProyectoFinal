@@ -5,7 +5,7 @@
                 <div class="md-form my-0">
                     <input class="form-control" type="text" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" placeholder="Search" aria-label="Search">
                 </div>
-                <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+                <button class="btn btn-primary mx-5" (click)="clear()" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
             </form>
             <table class="table mt-5">
                 <thead class="bg-primary">
@@ -49,11 +49,11 @@
                     <textarea [(ngModel)]="city.description" name="description" #description="ngModel" rows="2" type="text" class="form-control" required></textarea>
                     <label>Departamento</label>
                     <select [(ngModel)]="city.department_id" name="department_id" #department_id="ngModel" class="form-control">
-                    <option selected>Seleccione</option>
+                    <option value="1">Seleccione</option>
                     <option *ngFor="let department_id of departments">{{department_id.name}}</option>
                   </select>
                     <div class="modal-footer">
-                        <button type="submit" (click)="saveCity()" class="btn btn-primary">Guardar</button>
+                        <button type="submit" data-dismiss="modal" (click)="saveCity()" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -78,12 +78,12 @@
                     <textarea [(ngModel)]="cityEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" rows="2" type="text" class="form-control" required></textarea>
                     <label>Departamento</label>
                     <select [(ngModel)]="cityEdit.department_id" name="department_idEdit" #department_idEdit="ngModel" class="form-control">
-                    <option selected>Seleccione</option>
+                    <option value="1">Seleccione</option>
                     <option *ngFor="let department_id of departments">{{department_id.name}}</option>
                   </select>
                     <div class="modal-footer">
-                        <button type="submit" (click)="editCity()" class="btn btn-warning">Editar</button>
-                        <button type="submit" (click)="deleteCity()" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" data-dismiss="modal" (click)="editCity()" class="btn btn-warning">Editar</button>
+                        <button type="submit" data-dismiss="modal" (click)="deleteCity()" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>

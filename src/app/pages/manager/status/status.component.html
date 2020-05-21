@@ -5,7 +5,7 @@
                 <div class="md-form my-0">
                     <input class="form-control" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" type="text" placeholder="Search" aria-label="Search">
                 </div>
-                <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+                <button class="btn btn-primary mx-5" type="button" (click)="clear()" data-toggle="modal" data-target="#crear">Agregar</button>
             </form>
             <table class="table mt-5">
                 <thead class="bg-primary">
@@ -42,7 +42,7 @@
                     <label for="name">Nombre</label>
                     <input [(ngModel)]="status.name" name="name" #name="ngModel" type="text" class="form-control">
                     <div class="modal-footer">
-                        <button type="submit" (click)="saveStatus()" class="btn btn-primary">Guardar</button>
+                        <button type="submit" data-dismiss="modal" (click)="saveStatus()" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -64,8 +64,8 @@
                     <label for="name">Nombre</label>
                     <input [(ngModel)]="statusEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
                     <div class="modal-footer">
-                        <button type="submit" (click)="editStatus()" class="btn btn-warning">Editar</button>
-                        <button type="submit" (click)="deleteStatus()" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" data-dismiss="modal" (click)="editStatus()" class="btn btn-warning">Editar</button>
+                        <button type="submit" data-dismiss="modal" (click)="deleteStatus()" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>

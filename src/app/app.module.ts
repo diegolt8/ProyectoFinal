@@ -27,6 +27,8 @@ import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.co
 import { LoginComponent } from './pages/login/login.component';
 import { FilterPipe } from 'src/pipes/filter.pipe';
 import { StorageService } from './services/storage.service';
+import { PharmacyComponent } from './pages/manager/pharmacy/pharmacy.component';
+import { AdministadorComponent } from './pages/administador/administador.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { StorageService } from './services/storage.service';
     StatusComponent,
     TypeproductComponent,
     LoginComponent,
-    FilterPipe
+    FilterPipe,
+    PharmacyComponent,
+    AdministadorComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,5 @@ export class LoginService {
     hiddenNavbar = true;
     login = false;
     user = {};
-    constructor() {
-        
-    }
+    constructor() { }
 }

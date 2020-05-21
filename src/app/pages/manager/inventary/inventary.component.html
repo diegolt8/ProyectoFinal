@@ -5,7 +5,7 @@
                 <div class="md-form my-0">
                     <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                 </div>
-                <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+                <button class="btn btn-primary mx-5" (click)="clear()" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
             </form>
             <table class="table mt-5">
                 <thead class="bg-primary text-light">
@@ -62,8 +62,8 @@
                     <input [(ngModel)]="inventory.name" name="name" #name="ngModel" type="text" class="form-control">
                     <label for="description">Descripcion</label>
                     <textarea [(ngModel)]="inventory.description" name="description" #description="ngModel" class="form-control"></textarea>
-                    <label for="admissiondate">Fecha de ingreso</label>
-                    <input type="date" [(ngModel)]="inventory.admissiondate" name="admissiondate" #admissiondate="ngModel" class="form-control">
+                    <!-- <label for="admissiondate">Fecha de ingreso</label>
+                    <input type="date" [(ngModel)]="inventory.admissiondate" name="admissiondate" #admissiondate="ngModel" class="form-control"> -->
                     <label for="expirationdate">Fecha de vencimiento</label>
                     <input type="date" [(ngModel)]="inventory.expirationdate" name="expirationdate" #expirationdate="ngModel" class="form-control">
                     <label for="lotecode">codigo de lote</label>
@@ -79,35 +79,35 @@
                         <label>Proveedor</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventory.provider_id" name="provider_id" #provider_id="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let provider_id of providers">{{provider_id.name}}</option>
                     </select>
                     <div class="input-group-prepend">
                         <label>Estante</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventory.shelf_id" name="shelf_id" #shelf_id="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccionee...</option>
+                        <option value="1">Seleccionee...</option>
                         <option *ngFor="let shelf_id of shelfs">{{shelf_id.name}}</option>
                      </select>
                     <div class="input-group-prepend">
                         <label>Tipo producto</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventory.typeproduct_id" name="typeproduct_id" #typeproduct_id="ngModel" id="inputGroupSelect01">
-                         <option selected>Seleccione...</option>
+                         <option value="1">Seleccione...</option>
                          <option *ngFor="let typeproduct_id of typeproducts">{{typeproduct_id.name}}</option>
                     </select>
                     <div class="input-group-prepend">
                         <label>Laboratorio</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventory.laboratory_id" name="laboratory_id" #laboratory_id="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let laboratory_id of laboratories">{{laboratory_id.name}}</option>
                     </select>
                     <div class="input-group-prepend">
                         <label>Estado</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventory.status_id" name="status_id" #status_id="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let status_id of status">{{status_id.name}}</option>
                     </select>
                     <div class="form-group">
@@ -115,7 +115,7 @@
                         <input type="file" accept="image/*" (change)="changeListener($event)" [(ngModel)]="inventory.imagen" name="imagen" #imagen="ngModel" class="form-control-file" id="exampleFormControlFile1">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" (click)="saveInventory()">Guardar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveInventory()">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -157,35 +157,35 @@
                         <label>Proveedor</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventoryEdit.provider_id" name="provider_idEdit" #provider_idEdit="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let provider_id of providers">{{provider_id.name}}</option>
                     </select>
                     <div class="input-group-prepend">
                         <label>Estante</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventoryEdit.shelf_id" name="shelf_idEdit" #shelf_idEdit="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let shelf_id of shelfs">{{shelf_id.name}}</option>
                      </select>
                     <div class="input-group-prepend">
                         <label>Tipo producto</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventoryEdit.typeproduct_id" name="typeproduct_idEdit" #typeproduct_idEdit="ngModel" id="inputGroupSelect01">
-                         <option selected>Seleccione...</option>
+                         <option value="1">Seleccione...</option>
                          <option *ngFor="let typeproduct_id of typeproducts">{{typeproduct_id.name}}</option>
                     </select>
                     <div class="input-group-prepend">
                         <label>Laboratorio</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventoryEdit.laboratory_id" name="laboratory_idEdit" #laboratory_idEdit="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let laboratory_id of laboratories">{{laboratory_id.name}}</option>
                     </select>
                     <div class="input-group-prepend">
                         <label>Estado</label>
                     </div>
                     <select class="custom-select" [(ngModel)]="inventoryEdit.status_id" name="status_idEdit" #status_idEdit="ngModel" id="inputGroupSelect01">
-                        <option selected>Seleccione...</option>
+                        <option value="1">Seleccione...</option>
                         <option *ngFor="let status_id of status">{{status_id.name}}</option>
                     </select>
                     <div class="form-group">
@@ -196,8 +196,8 @@
                         <input accept="image/*" (change)="changeListener($event)" type="file" [(ngModel)]="imgOld" name="imgEdit" #imgEdit="ngModel" class="form-control-file">
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-warning" (click)="editInventory()">Editar</button>
-                        <button type="submit" class="btn btn-danger" (click)="deleteInventory()">Eliminar</button>
+                        <button type="submit" class="btn btn-warning" data-dismiss="modal" (click)="editInventory()">Editar</button>
+                        <button type="submit" class="btn btn-danger" data-dismiss="modal" (click)="deleteInventory()">Eliminar</button>
                     </div>
                 </form>
             </div>

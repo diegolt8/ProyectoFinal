@@ -4,7 +4,7 @@
             <div class="md-form my-0">
                 <input class="form-control" type="text" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" placeholder="Search" aria-label="Search">
             </div>
-            <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+            <button class="btn btn-primary mx-5" (click)="clear()" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
         </form>
         <table class="table mt-5">
             <thead class="bg-primary">
@@ -54,11 +54,11 @@
                         <label>Ciudad</label>
                     </div>
                     <select [(ngModel)]="provider.city_id" name="city_id" #city_id="ngModel" class="custom-select" id="inputGroupSelect01">
-                    <option selected>Seleccione</option>
+                    <option value="1">Seleccione</option>
                     <option *ngFor="let city_id of cities">{{city_id.name}}</option>
                   </select>
                     <div class="modal-footer">
-                        <button type="submit" (click)="saveProvider()" class="btn btn-primary">Guardar</button>
+                        <button type="submit" data-dismiss="modal" (click)="saveProvider()" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -87,12 +87,12 @@
                         <label>Ciudad</label>
                     </div>
                     <select [(ngModel)]="providerEdit.city_id" name="city_idEdit" #city_idEdit="ngModel" class="custom-select" id="inputGroupSelect01">
-                    <option selected>Seleccione</option>
+                    <option value="1">Seleccione</option>
                     <option *ngFor="let city_id of cities">{{city_id.name}}</option>
                   </select>
                     <div class="modal-footer">
-                        <button type="button" (click)="editProvider()" class="btn btn-warning" data-dismiss="modal">Editar</button>
-                        <button type="button" (click)="deleteProvider()" class="btn btn-danger">Eliminar</button>
+                        <button type="button" data-dismiss="modal" (click)="editProvider()" class="btn btn-warning" data-dismiss="modal">Editar</button>
+                        <button type="button" data-dismiss="modal" (click)="deleteProvider()" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>

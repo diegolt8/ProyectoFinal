@@ -4,10 +4,10 @@
             <div class="md-form my-0">
                 <input class="form-control" type="text" placeholder="Search" aria-label="Search">
             </div>
-            <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+            <button class="btn btn-primary mx-5" (click)="clear()" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
         </form>
         <table class="table mt-5">
-            <thead class="bg-warning">
+            <thead class="bg-primary">
                 <tr>
                     <th scope="col">rol</th>
                     <th scope="col">Nombres</th>
@@ -56,9 +56,9 @@
                         <div class="input-group-prepend">
                             <label>Rol</label>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01">
-                            <option selected>Seleccione...</option>
-                            <option value="1">Empleado</option>
+                        <select [(ngModel)]="user.rol_id" name="rol_id" #rol_id="ngModel" class="form-control">
+                            <option value="1">Seleccione</option>
+                            <option *ngFor="let rol_id of roles">{{rol_id.name}}</option>
                           </select>
                         <label for="recipient-name" class="col-form-label">Nombres:</label>
                         <input [(ngModel)]="user.name" name="name" #name="ngModel" type="text" class="form-control" id="recipient-name">
@@ -67,9 +67,9 @@
                         <div class="form-group">
                             <label for="sel1">Tipo documento:</label>
                             <select [(ngModel)]="user.documenttype" name="documenttype" #documenttype="ngModel" class="form-control" id="sel1">
-                              <option selected>Seleccione</option>
+                              <option value="1">Seleccione</option>
                               <option value="Cedula">Cedula</option>
-                              <option value="2">Tarjeta de identidad</option>
+                              <option value="TI">Tarjeta de identidad</option>
                             </select>
                         </div>
                         <label for="recipient-name" class="col-form-label">Numero documento:</label>
@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label for="sel1">Genero:</label>
                             <select [(ngModel)]="user.gender" name="gender" #gender="ngModel" class="form-control" id="sel1">
-                              <option selected>Seleccione</option>
+                              <option value="1">Seleccione</option>
                               <option value="1">Masculino</option>
                               <option value="2">Femenino</option>
                             </select>
@@ -93,18 +93,18 @@
                         <div class="form-group">
                             <label for="city">Ciudad</label>
                             <select [(ngModel)]="user.city_id" name="city_id" #city_id="ngModel" class="form-control">
-                                <option selected>Seleccione</option>
+                                <option value="1">Seleccione</option>
                                 <option *ngFor="let city_id of cities">{{city_id.name}}</option>
                               </select>
                         </div>
-                        <label for="recipient-name" class="col-form-label">Fecha de ingreso:</label>
-                        <input type="date" [(ngModel)]="user.admissiondate" name="admissiondate" #admissiondate="ngModel" class="form-control" id="recipient-name">
+                        <!-- <label for="recipient-name" class="col-form-label">Fecha de ingreso:</label>
+                        <input type="date" [(ngModel)]="user.admissiondate" name="admissiondate" #admissiondate="ngModel" class="form-control" id="recipient-name"> -->
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" (click)="saveUser()" data-dismiss="modal" class="btn btn-success">Registrarse</button>
+                <button type="submit" data-dismiss="modal" (click)="saveUser()" data-dismiss="modal" class="btn btn-success">Registrarse</button>
             </div>
         </div>
     </div>
@@ -120,67 +120,60 @@
           </button>
             </div>
             <div class="modal-body">
-                <div class="input-group-prepend">
-                    <label>Rol</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">Empleado</option>
-                    <option value="2">Cliente</option>
-                  </select>
-                <label for="">Nombres</label>
-                <input type="text" class="form-control">
-                <label for="">Apellidos</label>
-                <input type="text" class="form-control">
-                <div class="input-group-prepend">
-                    <label>Tipo documento</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                <label for="">Numero documento</label>
-                <input type="number" class="form-control" min="0">
-                <div class="input-group-prepend">
-                    <label>Genero</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Seleccione...</option>
-                    <option value="1">Femenino</option>
-                    <option value="2">Masculino</option>
-                  </select>
-                <label for="">Fecha de ingreso</label>
-                <input type="date" class="form-control">
-                <label for="">Edad</label>
-                <input type="number" class="form-control" min="0" max="100">
-                <label for="">Fecha de nacimiento</label>
-                <input type="date" class="form-control">
-                <label for="">Precio</label>
-                <label for="">Puntos</label>
-                <input type="number" class="form-control" min="0">
-                <div class="input-group-prepend">
-                    <label>Ciudad</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Seleccione...</option>
-                    <option value="1">Armenia</option>
-                    <option value="2">Calarca</option>
-                  </select>
-                <div class="input-group-prepend">
-                    <label>Departamento</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Seleccione...</option>
-                    <option value="1">Quindio</option>
-                  </select>
-                <label for="">Contraseña</label>
-                <input type="password" class="form-control">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <label>Rol</label>
+                        </div>
+                        <select [(ngModel)]="userEdit.rol_id" name="rol_idEdit" #rol_idEdit="ngModel" class="form-control">
+                            <option value="1">Seleccione</option>
+                            <option *ngFor="let rol_id of roles">{{rol_id.name}}</option>
+                          </select>
+                        <label for="recipient-name" class="col-form-label">Nombres:</label>
+                        <input [(ngModel)]="userEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Apellidos:</label>
+                        <input [(ngModel)]="userEdit.lastname" name="lastnameEdit" #lastnameEdit="ngModel" type="text" class="form-control" id="recipient-name">
+                        <div class="form-group">
+                            <label for="sel1">Tipo documento:</label>
+                            <select [(ngModel)]="userEdit.documenttype" name="documenttypeEdit" #documenttypeEdit="ngModel" class="form-control" id="sel1">
+                              <option value="1">Seleccione</option>
+                              <option value="Cedula">Cedula</option>
+                              <option value="TI">Tarjeta de identidad</option>
+                            </select>
+                        </div>
+                        <label for="recipient-name" class="col-form-label">Numero documento:</label>
+                        <input type="number" [(ngModel)]="userEdit.documentnumber" name="documentnumberEdit" #documentnumberEdit="ngModel" class="form-control" id="recipient-name">
+                        <div class="form-group">
+                            <label for="sel1">Genero:</label>
+                            <select [(ngModel)]="userEdit.gender" name="genderEdit" #genderEdit="ngModel" class="form-control" id="sel1">
+                              <option value="1">Seleccione</option>
+                              <option value="Masculino">Masculino</option>
+                              <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+                        <label for="recipient-name" class="col-form-label">Edad:</label>
+                        <input type="number" [(ngModel)]="userEdit.age" name="ageEdit" #ageEdit="ngModel" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Fecha de nacimiento:</label>
+                        <input type="date" [(ngModel)]="userEdit.birthdate" name="birthdateEdit" #birthdateEdit="ngModel" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">puntos:</label>
+                        <input type="number" [(ngModel)]="userEdit.points" name="pointsEdit" #pointsEdit="ngModel" class="form-control" id="recipient-name">
+                        <label for="">Contraseña</label>
+                        <input [(ngModel)]="newPassword" type="password" name="password" #passwordEdit="ngModel" class="form-control">
+                        <div class="form-group">
+                            <label for="city">Ciudad</label>
+                            <select [(ngModel)]="userEdit.city_id" name="city_idEdit" #city_idEdit="ngModel" class="form-control">
+                                <option value="1">Seleccione</option>
+                                <option *ngFor="let city_id of cities">{{city_id.name}}</option>
+                              </select>
+                        </div>
+                        <label for="recipient-name" class="col-form-label">Fecha de ingreso:</label>
+                        <input type="date" [(ngModel)]="userEdit.admissiondate" name="admissiondateEdit" #admissiondateEdit="ngModel" class="form-control" id="recipient-name">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <button type="button" data-dismiss="modal" (click)="editUser()" class="btn btn-warning" data-dismiss="modal">Editar</button>
+                <button type="button" data-dismiss="modal" (click)="deleteUser()" class="btn btn-danger">Eliminar</button>
             </div>
         </div>
     </div>

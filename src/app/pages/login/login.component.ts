@@ -20,11 +20,12 @@ export class LoginComponent implements OnInit {
     private storageService: StorageService,
     private router: Router) {
     this.loginService.hiddenNavbar = false;
-    this.getCities();
-    this.getUsers();
+
   }
 
   ngOnInit(): void {
+    this.getCities();
+    this.getUsers();
   }
 
   loginUser: any = {
@@ -34,30 +35,40 @@ export class LoginComponent implements OnInit {
 
   users: any = [];
 
+  roles: any = [];
+
   failLogin = false;
 
   getUsers() {
     this.userService.getUser().subscribe(data => {
-      if (data.res !== 'NotInfo') {
-        this.users = JSON.parse(JSON.parse(JSON.stringify(data)).data);
-      } else {
-        this.users = [];
-      }
+      this.users = JSON.parse(JSON.parse(JSON.stringify(data)).data);
+      this.users.forEach(user => {
+        this.cities.forEach(ciudad => {
+          if (user.city_id === ciudad.id) {
+            user.city_id = ciudad.name;
+          }
+        });
+        this.roles.forEach(rol => {
+          if (user.rol_id === rol.id) {
+            user.rol_id = rol.name;
+          }
+        });
+      });
     });
   }
 
   userRegister: any = {
     name: '',
     lastname: '',
-    documenttype: '',
+    documenttype: '1',
     documentnumber: '',
-    gender: '',
+    gender: '1',
     age: 0,
     birthdate: '',
     points: 0,
     password: '',
-    rol_id: 0,
-    city_id: 0,
+    rol_id: 3,
+    city_id: 1,
     admissiondate: '',
     id: 0
   };
@@ -74,12 +85,16 @@ export class LoginComponent implements OnInit {
           this.storageService.login = true;
           this.loginService.user = element;
           this.storageService.setCurrentSession(element);
-          this.router.navigate(['home']);
+          if (element.rol_id === '2') {
+            this.router.navigate(['administrador']);
+          } else {
+            this.router.navigate(['home']);
+          }
         } else {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Something went wrong!',
+            text: 'Revisa de nuevo tus credenciales!',
           });
         }
       }
@@ -93,6 +108,26 @@ export class LoginComponent implements OnInit {
   }
 
   saveUser() {
+
+    this.cities.forEach(element => {
+      if (element.name === this.userRegister.city_id) {
+        this.userRegister.city_id = element.id;
+      }
+    });
+
+    this.roles.forEach(element => {
+      if (element.name === this.userRegister.rol_id) {
+        this.userRegister.rol_id = element.id;
+      }
+    });
+
+    const dateNow = new Date();
+    const dd = String(dateNow.getDate()).padStart(2, '0');
+    const mm = String(dateNow.getMonth() + 1).padStart(2, '0');
+    const yyyy = dateNow.getFullYear();
+
+    const today = yyyy + '-' + mm + '-' + dd;
+
     const postObject = new FormData();
 
     postObject.append('action', 'save');
@@ -103,11 +138,11 @@ export class LoginComponent implements OnInit {
     postObject.append('gender', this.userRegister.gender);
     postObject.append('age', this.userRegister.age);
     postObject.append('birthdate', this.userRegister.birthdate);
-    postObject.append('points', this.userRegister.points);
+    postObject.append('points', '0');
     postObject.append('password', this.userRegister.password);
     postObject.append('rol_id', this.userRegister.rol_id);
     postObject.append('city_id', this.userRegister.city_id);
-    postObject.append('admissiondate', this.userRegister.admissiondate);
+    postObject.append('admissiondate', today);
     postObject.append('id', this.userRegister.id);
     this.userService.saveUser(postObject).subscribe(data => {
       let res: any;
@@ -139,5 +174,22 @@ export class LoginComponent implements OnInit {
         })
       }
     });
+  }
+
+  clear() {
+    this.userRegister = {
+      name: [null],
+      lastname: [null],
+      documenttype: 1,
+      documentnumber: [null],
+      gender: 1,
+      age: 0,
+      birthdate: [null],
+      points: 0,
+      password: [null],
+      rol_id: 1,
+      city_id: 1,
+      admissiondate: [null],
+    }
   }
 }

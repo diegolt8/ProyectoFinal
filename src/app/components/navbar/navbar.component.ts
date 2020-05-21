@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import $ from 'jquery';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-navbar',
@@ -45,19 +44,22 @@ export class NavbarComponent implements OnInit {
     if (user === '2') {
       this.menus.push('ciudad',
         'departamento',
+        'farmacia',
         'inventario',
         'laboratorio',
         'proveedor',
-        'rol',
         'estante',
+        'rol',
         'estado',
         'tipo producto',
         'usuario');
-    } else if ('1') {
+    } else if (user === '1') {
       this.menus.push(
-        'inventario',
-        'usuario');
+        'menu empleado');
+    } else if ('3') {
+      this.menus.push(
+        'menu cliente'
+      );
     }
   }
-
 }

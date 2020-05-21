@@ -1,0 +1,92 @@
+<body>
+    <div class="container">
+        <div class="row">
+            <form class="form-inline mt-5">
+                <div class="md-form my-0">
+                    <input class="form-control" type="text" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" placeholder="Search" aria-label="Search">
+                </div>
+                <button class="btn btn-primary mx-5" type="button" (click)="clear()" data-toggle="modal" data-target="#crear">Agregar</button>
+            </form>
+            <table class="table mt-5">
+                <thead class="bg-primary">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Nit</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pharmacy of pharmacies |  paginate: {itemsPerPage: 6, currentPage: actualPage} | filter: FilterPipe">
+                        <td>{{pharmacy.name}}</td>
+                        <td>{{pharmacy.nit}}</td>
+                        <td><button class="btn btn-primary" (click)="findPharmacy(pharmacy.id)" type="submit" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bg-transparent text-center mt-5 mb-5">
+            <pagination-controls class="my-pagination" (pageChange)="actualPage=$event">
+            </pagination-controls>
+        </div>
+    </div>
+</body>
+
+<div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nueva farmacia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="pharmacy.name" name="name" #name="ngModel" type="text" class="form-control">
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Examinar archivo</label>
+                        <input type="file" accept="image/*" (change)="changeListener($event)" [(ngModel)]="pharmacy.imagen" name="imagen" #imagen="ngModel" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <label for="name">Nit</label>
+                    <input [(ngModel)]="pharmacy.nit" name="nit" #nit="ngModel" type="text" class="form-control">
+                    <div class="modal-footer">
+                        <button type="submit" data-dismiss="modal" (click)="savePharmacy()" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestion de farmacia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="name">Nombre</label>
+                    <input [(ngModel)]="pharmacyEdit.name" name="nameEdit" #nameEdit="ngModel" type="text" class="form-control">
+                    <div class="form-group">
+                        <img id="imagenres" [src]="pharmacyEdit.imagen">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Examinar archivo</label>
+                        <input type="file" accept="image/*" (change)="changeListener($event)" [(ngModel)]="imgOld" name="imagenEdit" #imagenEdit="ngModel" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <label for="name">Nit</label>
+                    <input [(ngModel)]="pharmacyEdit.nit" name="nitEdit" #nitEdit="ngModel" type="text" class="form-control">
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" (click)="editPharmacy()" class="btn btn-warning" data-dismiss="modal">Editar</button>
+                        <button type="button" data-dismiss="modal" (click)="deletePharmacy()" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

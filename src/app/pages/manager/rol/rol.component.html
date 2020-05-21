@@ -1,25 +1,25 @@
 <body>
     <div class="container">
         <div class="row">
-            <form class="form-inline mt-5">
+            <!-- <form class="form-inline mt-5">
                 <div class="md-form my-0">
                     <input class="form-control" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" type="text" placeholder="Search" aria-label="Search">
                 </div>
                 <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
-            </form>
+            </form> -->
             <table class="table mt-5">
                 <thead class="bg-primary">
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripcion</th>
-                        <th scope="col">Action</th>
+                        <!-- <th scope="col">Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let rol of roles | paginate: {itemsPerPage: 6, currentPage: actualPage} | filter: FilterPipe">
                         <td>{{rol.name}}</td>
                         <td>{{rol.description}}</td>
-                        <td><button class="btn btn-primary" type="submit" (click)="findRol(rol.id)" data-toggle="modal" data-target="#editar">Gestion</button></td>
+                        <!-- <td><button class="btn btn-primary" type="submit" (click)="findRol(rol.id)" data-toggle="modal" data-target="#editar">Gestion</button></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -45,10 +45,9 @@
                     <input [(ngModel)]="rol.name" name="name" #name="ngModel" type="text" class="form-control">
                     <label for="">Descripcion</label>
                     <textarea [(ngModel)]="rol.description" name="description" #description="ngModel" type="text" class="form-control"></textarea>
-
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" (click)="saveRol()" class="btn btn-primary">Guardar</button>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>

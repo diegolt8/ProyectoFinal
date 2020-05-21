@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
 export class CityComponent implements OnInit {
 
   constructor(private cityService: CityService,
-              private departmentService: DepartmentService,
-              private storageService: StorageService,
-              private router: Router) {
+    private departmentService: DepartmentService,
+    private storageService: StorageService,
+    private router: Router) {
     this.getCitys();
     this.getDepartments();
   }
@@ -81,29 +81,56 @@ export class CityComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se eliminó satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente'
         })
         this.getCitys();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Oops! no se pudo eliminar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo eliminar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
@@ -140,29 +167,56 @@ export class CityComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se editó satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se editó satisfactoriamente'
         })
         this.getCitys();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Oops! no se pudo editar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo editar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
@@ -188,32 +242,67 @@ export class CityComponent implements OnInit {
       res = data;
 
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se registro satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se registró satisfactoriamente'
         })
         this.getCitys();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Oops! no se pudo registrar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo registrar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
     this.closeModal.nativeElement.click();
+  }
+
+  clear() {
+    this.city = {
+      name: [null],
+      description: [null],
+      department_id: 1,
+    }
   }
 }

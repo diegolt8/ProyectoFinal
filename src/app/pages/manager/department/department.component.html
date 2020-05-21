@@ -47,7 +47,7 @@
                     <textarea [(ngModel)]="department.description" name="description" #description="ngModel" type="text" class="form-control"></textarea>
 
                     <div class="modal-footer">
-                        <button type="submit" (click)="saveDepartment()" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+                        <button type="submit" data-dismiss="modal" (click)="saveDepartment()" data-dismiss="modal" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -71,8 +71,8 @@
                     <label for="">Descripcion</label>
                     <textarea [(ngModel)]="departmentEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" type="text" class="form-control"></textarea>
                     <div class="modal-footer">
-                        <button type="submit" (click)="editDepartment()" class="btn btn-warning">Editar</button>
-                        <button type="submit" (click)="deleteDepartment()" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" data-dismiss="modal" (click)="editDepartment()" class="btn btn-warning">Editar</button>
+                        <button type="submit" data-dismiss="modal" (click)="deleteDepartment()" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>

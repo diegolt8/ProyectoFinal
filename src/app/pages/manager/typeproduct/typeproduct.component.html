@@ -5,7 +5,7 @@
                 <div class="md-form my-0">
                     <input class="form-control" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" type="text" placeholder="Search" aria-label="Search">
                 </div>
-                <button class="btn btn-primary mx-5" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
+                <button class="btn btn-primary mx-5" type="button" (click)="clear()" data-toggle="modal" data-target="#crear">Agregar</button>
             </form>
             <table class="table mt-5">
                 <thead class="bg-primary">
@@ -46,7 +46,7 @@
                     <label for="">Descripcion</label>
                     <textarea [(ngModel)]="typeProduct.description" name="description" #description="ngModel" type="text" class="form-control"></textarea>
                     <div class="modal-footer">
-                        <button type="submit" (click)="saveTypeProduct()" class="btn btn-primary">Guardar</button>
+                        <button type="submit" data-dismiss="modal" (click)="saveTypeProduct()" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -70,8 +70,8 @@
                     <label for="">Descripcion</label>
                     <textarea [(ngModel)]="typeProductEdit.description" name="descriptionEdit" #descriptionEdit="ngModel" type="text" class="form-control"></textarea>
                     <div class="modal-footer">
-                        <button type="submit" (click)="editTypeProduct()" class="btn btn-warning">Editar</button>
-                        <button type="submit" (click)="deleteTypeProduct()" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" data-dismiss="modal" (click)="editTypeProduct()" class="btn btn-warning">Editar</button>
+                        <button type="submit" data-dismiss="modal" (click)="deleteTypeProduct()" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>

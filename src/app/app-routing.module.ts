@@ -14,6 +14,8 @@ import { RolComponent } from './pages/manager/rol/rol.component';
 import { StatusComponent } from './pages/manager/status/status.component';
 import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.component';
 import { LoginComponent } from './pages/login/login.component';
+import { PharmacyComponent } from './pages/manager/pharmacy/pharmacy.component';
+import { AdministadorComponent } from './pages/administador/administador.component';
 
 
 const routes: Routes = [
@@ -30,8 +32,10 @@ const routes: Routes = [
   { path: 'laboratorio', component: LaboratoriesComponent },
   { path: 'rol', component: RolComponent },
   { path: 'estado', component: StatusComponent },
+  { path: 'farmacia', component: PharmacyComponent },
   { path: 'tipo producto', component: TypeproductComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'administrador', component: AdministadorComponent }
 ];
 
 @NgModule({

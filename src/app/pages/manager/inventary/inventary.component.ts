@@ -118,9 +118,8 @@ export class InventaryComponent implements OnInit {
 
   async getInventories() {
     const invent = await this.inventoryService.getInventory().toPromise();
-    this.inventories = JSON.parse(invent.data);
-    this.inventoryService.getInventory().subscribe(data => {
-      this.inventories = JSON.parse(JSON.parse(JSON.stringify(data)).data);
+    if (invent.res !== 'NotInfo') {
+      this.inventories = JSON.parse(invent.data);
       this.inventories.forEach(inventory => {
         const url = this.urlImage + inventory.imagen;
         inventory.imagen = url;
@@ -150,7 +149,10 @@ export class InventaryComponent implements OnInit {
           });
         });
       });
-    });
+    } else {
+      this.inventories = [];
+    }
+
   }
 
   findProduct(id: string) {
@@ -208,7 +210,6 @@ export class InventaryComponent implements OnInit {
 
     if (this.image !== null) {
       this.inventory.imagen = this.image.replace('data:image/;base64,', '');
-      console.log(this.inventory.imagen);
     }
 
     this.providers.forEach(element => {
@@ -236,13 +237,22 @@ export class InventaryComponent implements OnInit {
         this.inventory.status_id = element.id;
       }
     });
+
+
+    const dateNow = new Date();
+    const dd = String(dateNow.getDate()).padStart(2, '0');
+    const mm = String(dateNow.getMonth() + 1).padStart(2, '0');
+    const yyyy = dateNow.getFullYear();
+
+    const today = yyyy + '-' + mm + '-' + dd;
+
     const postObject = new FormData();
 
     postObject.append('action', 'save');
     postObject.append('milligrams', this.inventory.milligrams);
     postObject.append('name', this.inventory.name);
     postObject.append('description', this.inventory.description);
-    postObject.append('admissiondate', this.inventory.admissiondate);
+    postObject.append('admissiondate', today);
     postObject.append('expirationdate', this.inventory.expirationdate);
     postObject.append('lotecode', this.inventory.lotecode);
     postObject.append('quantity', this.inventory.quantity);
@@ -263,33 +273,60 @@ export class InventaryComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se registro satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se registró satisfactoriamente'
         })
         this.getInventories();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Oops! no se pudo registrar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo registrar'
         })
       } else if (res.code === '3') {
-        console.log(data);
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   editInventory() {
@@ -304,8 +341,7 @@ export class InventaryComponent implements OnInit {
     } else {
       url = this.inventoryEdit.imagen.substr(61, this.inventoryEdit.imagen.length);
       const array = this.inventoryEdit.imagen.split('/');
-      this.inventoryEdit.imagen = array[4] + '/' + array[5] + '/' + array[6];
-      console.log(this.inventoryEdit.imagen);
+      this.inventoryEdit.imagen = array[4] + '/' + array[5] + '/' + array[6] + '/' + array[7];
     }
 
     this.providers.forEach(element => {
@@ -359,33 +395,60 @@ export class InventaryComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se editó satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se editó satisfactoriamente'
         })
         this.getInventories();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Oops! no se pudo editar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo editar'
         })
       } else if (res.code === '3') {
-        console.log(data);
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
+    this.closeModal.nativeElement.click();
   }
 
   deleteInventory() {
@@ -396,31 +459,79 @@ export class InventaryComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Se eliminó satisfactoriamente',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Se eliminó satisfactoriamente'
         })
         this.getInventories();
       } else if (res.code === '2') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Oops! no se pudo eliminar',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: 'No se pudo eliminar'
         })
       } else if (res.code === '3') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: 'Oops! resulto un problema',
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-start',
           showConfirmButton: false,
-          timer: 1500
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Oops! resulto un problema'
         })
       }
     });
+    this.closeModal.nativeElement.click();
+    this.clear();
+  }
+
+  clear() {
+    this.inventory = {
+      milligrams: 0,
+      name: [null],
+      description: [null],
+      admissiondate: [null],
+      expirationdate: [null],
+      lotecode: [null],
+      quantity: 0,
+      price: [null],
+      provider_id: 1,
+      shelf_id: 1,
+      typeproduct_id: 1,
+      laboratory_id: 1,
+      status_id: 1,
+      imagen: [null],
+    };
   }
 }

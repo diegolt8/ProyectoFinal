@@ -205,8 +205,6 @@ export class LaboratoriesComponent implements OnInit {
     postObject.append('description', this.laboratory.description);
     postObject.append('id', this.laboratory.id);
 
-    console.log(this.laboratory);
-
     this.laboratoryService.saveLaboratory(postObject).subscribe(data => {
       let res: any;
       res = data;
@@ -269,8 +267,8 @@ export class LaboratoriesComponent implements OnInit {
 
   clear() {
     this.laboratory = {
-      name: [null],
-      description: [null]
+      name: '',
+      description: ''
     }
   }
 }

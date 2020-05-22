@@ -2,7 +2,7 @@
     <div class="row">
         <form class="form-inline mt-5">
             <div class="md-form my-0">
-                <input class="form-control" type="text" [(ngModel)]="FilterPipe" [ngModelOptions]="{ standalone: true }" placeholder="Search" aria-label="Search">
+                <input class="form-control" [(ngModel)]="FilterProviderPipe" [ngModelOptions]="{ standalone: true }" type="text" placeholder="Search" aria-label="Search">
             </div>
             <button class="btn btn-primary mx-5" (click)="clear()" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
         </form>
@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let provider of providers |  paginate: {itemsPerPage: 6, currentPage: actualPage} | filter: FilterPipe">
+                <tr *ngFor="let provider of providers |  paginate: {itemsPerPage: 6, currentPage: actualPage} | filterProvider: FilterProviderPipe">
                     <td>{{provider.name}}</td>
                     <td>{{provider.nit}}</td>
                     <td>{{provider.address}}</td>
@@ -43,13 +43,28 @@
           </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <label for="name">Nombre</label>
-                    <input [(ngModel)]="provider.name" name="name" #name="ngModel" type="text" class="form-control">
-                    <label for="nit">Nit</label>
-                    <input [(ngModel)]="provider.nit" name="nit" #nit="ngModel" type="text" class="form-control">
-                    <label for="address">Direccion</label>
-                    <input [(ngModel)]="provider.address" class="form-control" name="address" #address="ngModel" type="text">
+                <form (ngSubmit)="saveProvider()" #formProviders="ngForm">
+                    <div class="input-field">
+                        <label for="name">Nombre</label>
+                        <input [(ngModel)]="provider.name" required name="name" #name="ngModel" type="text" class="form-control">
+                        <div *ngIf="name.touched && !name.valid">
+                            <div *ngIf="name.errors.required">Este campo es requerido</div>
+                        </div>
+                    </div>
+                    <div class="input-field">
+                        <label for="nit">Nit</label>
+                        <input [(ngModel)]="provider.nit" required name="nit" #nit="ngModel" type="text" class="form-control">
+                        <div *ngIf="nit.touched && !nit.valid">
+                            <div *ngIf="nit.errors.required">Este campo es requerido</div>
+                        </div>
+                    </div>
+                    <div class="input-field">
+                        <label for="address">Direccion</label>
+                        <input [(ngModel)]="provider.address" required class="form-control" name="address" #address="ngModel" type="text">
+                        <div *ngIf="address.touched && !address.valid">
+                            <div *ngIf="address.errors.required">Este campo es requerido</div>
+                        </div>
+                    </div>
                     <div class="input-group-prepend">
                         <label>Ciudad</label>
                     </div>
@@ -58,7 +73,7 @@
                     <option *ngFor="let city_id of cities">{{city_id.name}}</option>
                   </select>
                     <div class="modal-footer">
-                        <button type="submit" data-dismiss="modal" (click)="saveProvider()" class="btn btn-primary">Guardar</button>
+                        <button type="submit" data-dismiss="modal" (click)="saveProvider()" [disabled]="formProviders.invalid" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>

@@ -51,7 +51,7 @@
           </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form (ngSubmit)="saveUser()" #formUser="ngForm">
                     <div class="form-group">
                         <div class="input-group-prepend">
                             <label>Rol</label>
@@ -60,36 +60,71 @@
                             <option value="1">Seleccione</option>
                             <option *ngFor="let rol_id of roles">{{rol_id.name}}</option>
                           </select>
-                        <label for="recipient-name" class="col-form-label">Nombres:</label>
-                        <input [(ngModel)]="user.name" name="name" #name="ngModel" type="text" class="form-control" id="recipient-name">
-                        <label for="recipient-name" class="col-form-label">Apellidos:</label>
-                        <input [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel" type="text" class="form-control" id="recipient-name">
+                        <div class="input-field">
+                            <label for="recipient-name" class="col-form-label">Nombres:</label>
+                            <input [(ngModel)]="user.name" required name="name" #name="ngModel" type="text" class="form-control" id="recipient-name">
+                            <div *ngIf="name.touched && !name.valid">
+                                <div *ngIf="name.errors.required">Este campo es requerido</div>
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <label for="recipient-name" class="col-form-label">Apellidos:</label>
+                            <input [(ngModel)]="user.lastname" required name="lastname" #lastname="ngModel" type="text" class="form-control" id="recipient-name">
+                            <div *ngIf="lastname.touched && !lastname.valid">
+                                <div *ngIf="lastname.errors.required">Este campo es requerido</div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="sel1">Tipo documento:</label>
-                            <select [(ngModel)]="user.documenttype" name="documenttype" #documenttype="ngModel" class="form-control" id="sel1">
-                              <option value="1">Seleccione</option>
+                            <select [(ngModel)]="user.documenttype" required name="documenttype" #documenttype="ngModel" class="form-control" id="sel1">
+                              <option value="1">Seleccione...</option>
                               <option value="Cedula">Cedula</option>
                               <option value="TI">Tarjeta de identidad</option>
                             </select>
+                            <div *ngIf="documenttype.touched && !documenttype.valid">
+                                <div *ngIf="documenttype.errors.required">Este campo es requerido</div>
+                            </div>
                         </div>
-                        <label for="recipient-name" class="col-form-label">Numero documento:</label>
-                        <input type="text" [(ngModel)]="user.documentnumber" name="documentnumber" #documentnumber="ngModel" class="form-control" id="recipient-name">
+                        <div class="input-field">
+                            <label for="recipient-name" class="col-form-label">Numero documento:</label>
+                            <input required type="number" [(ngModel)]="user.documentnumber" name="documentnumber" #documentnumber="ngModel" class="form-control" id="recipient-name">
+                            <div *ngIf="documentnumber.touched && !documentnumber.valid">
+                                <div *ngIf="documentnumber.errors.required">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="sel1">Genero:</label>
                             <select [(ngModel)]="user.gender" name="gender" #gender="ngModel" class="form-control" id="sel1">
-                              <option value="1">Seleccione</option>
-                              <option value="1">Masculino</option>
-                              <option value="2">Femenino</option>
+                              <option value="1">Seleccione...</option>
+                              <option value="Masculino">Masculino</option>
+                              <option value="Femenino">Femenino</option>
                             </select>
                         </div>
-                        <label for="recipient-name" class="col-form-label">Edad:</label>
-                        <input type="number" [(ngModel)]="user.age" name="age" #age="ngModel" class="form-control" id="recipient-name">
-                        <label for="recipient-name" class="col-form-label">Fecha de nacimiento:</label>
-                        <input type="date" [(ngModel)]="user.birthdate" name="birthdate" #birthdate="ngModel" class="form-control" id="recipient-name">
-                        <label for="recipient-name" class="col-form-label">puntos:</label>
-                        <input type="number" [(ngModel)]="user.points" name="points" #points="ngModel" class="form-control" id="recipient-name">
-                        <label for="recipient-name" class="col-form-label">Contraseña:</label>
-                        <input type="password" [(ngModel)]="user.password" name="password" #password="ngModel" class="form-control" id="recipient-name">
+                        <div class="input-field">
+                            <label for="recipient-name" class="col-form-label">Edad:</label>
+                            <input type="number" [(ngModel)]="user.age" required name="age" #age="ngModel" class="form-control" id="recipient-name">
+                            <div *ngIf="age.touched && !age.valid">
+                                <div *ngIf="age.errors.required">Este campo es requerido</div>
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <label for="recipient-name" class="col-form-label">Fecha de nacimiento:</label>
+                            <input type="date" [(ngModel)]="user.birthdate" required name="birthdate" #birthdate="ngModel" class="form-control" id="recipient-name">
+                            <div *ngIf="birthdate.touched && !birthdate.valid">
+                                <div *ngIf="birthdate.errors.required">Este campo es requerido</div>
+                            </div>
+                        </div>
+                        <label for="recipient-name" hidden class="col-form-label">puntos:</label>
+                        <input type="number" hidden [(ngModel)]="user.points" name="points" #points="ngModel" class="form-control" id="recipient-name">
+                        <div class="input-field">
+                            <label for="recipient-name" class="col-form-label">Contraseña:</label>
+                            <input type="password" [(ngModel)]="user.password" name="password" #password="ngModel" class="form-control" id="recipient-name">
+                            <div *ngIf="password.touched && !password.valid">
+                                <div *ngIf="password.errors.required">Este campo es requerido</div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="city">Ciudad</label>
                             <select [(ngModel)]="user.city_id" name="city_id" #city_id="ngModel" class="form-control">
@@ -104,7 +139,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" data-dismiss="modal" (click)="saveUser()" data-dismiss="modal" class="btn btn-success">Registrarse</button>
+                <button type="submit" data-dismiss="modal" (click)="saveUser()" [disabled]="formUser.invalid" data-dismiss="modal" class="btn btn-success">Registrarse</button>
             </div>
         </div>
     </div>

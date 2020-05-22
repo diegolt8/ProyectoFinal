@@ -147,15 +147,15 @@ export class LoginComponent implements OnInit {
     this.userService.saveUser(postObject).subscribe(data => {
       let res: any;
       res = data;
-      console.log(this.userRegister);
       if (res.code === '1') {
+        this.getUsers();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
           title: 'Se registro satisfactoriamente',
           showConfirmButton: false,
           timer: 1500
-        })
+        });
       } else if (res.code === '2') {
         Swal.fire({
           position: 'top-end',
@@ -163,7 +163,7 @@ export class LoginComponent implements OnInit {
           title: 'Oops! no se pudo registrar',
           showConfirmButton: false,
           timer: 1500
-        })
+        });
       } else if (res.code === '3') {
         Swal.fire({
           position: 'top-end',
@@ -171,25 +171,25 @@ export class LoginComponent implements OnInit {
           title: 'Oops! resulto un problema',
           showConfirmButton: false,
           timer: 1500
-        })
+        });
       }
     });
   }
 
   clear() {
     this.userRegister = {
-      name: [null],
-      lastname: [null],
+      name: '',
+      lastname: '',
       documenttype: 1,
-      documentnumber: [null],
+      documentnumber: '',
       gender: 1,
       age: 0,
-      birthdate: [null],
+      birthdate: '',
       points: 0,
-      password: [null],
+      password: '',
       rol_id: 1,
       city_id: 1,
-      admissiondate: [null],
+      admissiondate: '',
     }
   }
 }

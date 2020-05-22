@@ -29,6 +29,7 @@ import { FilterPipe } from 'src/pipes/filter.pipe';
 import { StorageService } from './services/storage.service';
 import { PharmacyComponent } from './pages/manager/pharmacy/pharmacy.component';
 import { AdministadorComponent } from './pages/administador/administador.component';
+import { FilterProviderPipe } from 'src/pipes/filterProvider.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AdministadorComponent } from './pages/administador/administador.compone
     TypeproductComponent,
     LoginComponent,
     FilterPipe,
+    FilterProviderPipe,
     PharmacyComponent,
     AdministadorComponent,
   ],
@@ -66,7 +68,8 @@ import { AdministadorComponent } from './pages/administador/administador.compone
     FormBuilder,
     DatePipe,
     FilterPipe,
-    StorageService
+    FilterProviderPipe,
+    StorageService,
   ],
   bootstrap: [AppComponent]
 })

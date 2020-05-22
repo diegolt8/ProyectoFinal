@@ -144,18 +144,18 @@ export class FooterComponent implements OnInit {
 
   clear() {
     this.userRegister = {
-      name: [null],
-      lastname: [null],
+      name: '',
+      lastname: '',
       documenttype: 1,
-      documentnumber: [null],
+      documentnumber: '',
       gender: 1,
       age: 0,
-      birthdate: [null],
+      birthdate: '',
       points: 0,
-      password: [null],
+      password: '',
       rol_id: 1,
       city_id: 1,
-      admissiondate: [null],
+      admissiondate: '',
     }
   }
 

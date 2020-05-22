@@ -124,8 +124,6 @@ export class UsersComponent implements OnInit {
 
 
   saveUser() {
-    const postObject = new FormData();
-
     this.cities.forEach(element => {
       if (element.name === this.user.city_id) {
         this.user.city_id = element.id;
@@ -137,6 +135,15 @@ export class UsersComponent implements OnInit {
         this.user.rol_id = element.id;
       }
     });
+
+    const dateNow = new Date();
+    const dd = String(dateNow.getDate()).padStart(2, '0');
+    const mm = String(dateNow.getMonth() + 1).padStart(2, '0');
+    const yyyy = dateNow.getFullYear();
+
+    const today = yyyy + '-' + mm + '-' + dd;
+
+    const postObject = new FormData();
 
     postObject.append('action', 'save');
     postObject.append('name', this.user.name);
@@ -150,9 +157,8 @@ export class UsersComponent implements OnInit {
     postObject.append('password', this.user.password);
     postObject.append('rol_id', this.user.rol_id);
     postObject.append('city_id', this.user.city_id);
-    postObject.append('admissiondate', this.user.admissiondate);
+    postObject.append('admissiondate', today);
     postObject.append('id', this.user.id);
-
     this.userService.saveUser(postObject).subscribe(data => {
       let res: any;
       res = data;
@@ -372,18 +378,18 @@ export class UsersComponent implements OnInit {
 
   clear() {
     this.user = {
-      name: [null],
-      lastname: [null],
-      documenttype: [null],
-      documentnumber: [null],
-      gender: [null],
+      name: '',
+      lastname: '',
+      documenttype: 1,
+      documentnumber: '',
+      gender: 1,
       age: 0,
-      birthdate: [null],
+      birthdate: '',
       points: 0,
-      password: [null],
+      password: '',
       rol_id: 1,
       city_id: 1,
-      admissiondate: [null],
+      admissiondate: '',
     }
   }
 }

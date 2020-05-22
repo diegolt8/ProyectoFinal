@@ -64,8 +64,8 @@ export class ShelfsComponent implements OnInit {
     this.shelfService.deleteShelf(this.shelfEdit.id).subscribe(data => {
       let res: any;
       res = data;
-      console.log(data);
       if (res.code === '1') {
+        this.getShelfs();
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-start',
@@ -82,7 +82,6 @@ export class ShelfsComponent implements OnInit {
           icon: 'success',
           title: 'Se eliminó satisfactoriamente'
         })
-        this.getShelfs();
       } else if (res.code === '2') {
         const Toast = Swal.mixin({
           toast: true,
@@ -112,7 +111,6 @@ export class ShelfsComponent implements OnInit {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
           }
         })
-
         Toast.fire({
           icon: 'warning',
           title: 'Oops! resulto un problema'
@@ -265,8 +263,8 @@ export class ShelfsComponent implements OnInit {
 
   clear() {
     this.shelf = {
-      name: [null],
-      description: [null],
+      name: '',
+      description: '',
     }
   }
 }

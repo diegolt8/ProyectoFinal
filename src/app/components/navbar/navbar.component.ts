@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
   }
 
   login() {
-    this.router.navigate(['login']);
+    this.router.navigate(['administrador']);
   }
 
   logout() {
@@ -42,16 +42,10 @@ export class NavbarComponent implements OnInit {
 
   getMenus(user) {
     if (user === '2') {
-      this.menus.push('ciudad',
-        'departamento',
-        'farmacia',
-        'inventario',
+      this.menus.push(
         'laboratorio',
         'proveedor',
         'estante',
-        'rol',
-        'estado',
-        'tipo producto',
         'usuario');
     } else if (user === '1') {
       this.menus.push(

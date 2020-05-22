@@ -33,7 +33,7 @@ export class ProvidersComponent implements OnInit {
     }
   }
 
-  FilterPipe: any = '';
+  FilterProviderPipe: any = '';
 
   actualPage = 1;
 
@@ -301,9 +301,9 @@ export class ProvidersComponent implements OnInit {
 
   clear() {
     this.provider = {
-      name: [null],
-      nit: [null],
-      address: [null],
+      name: '',
+      nit: '',
+      address: '',
       city_id: 1,
     }
   }

@@ -75,7 +75,7 @@ export class UsersComponent implements OnInit {
 
   actualPage = 1;
 
-  FilterPipe: any = '';
+  FilterPipeUser: any = '';
 
   getCities() {
     this.cityService.getCity().subscribe(data => {

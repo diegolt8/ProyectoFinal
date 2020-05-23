@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit {
       this.menus.push(
         'laboratorio',
         'proveedor',
+        'inventario',
         'estante',
         'usuario');
     } else if (user === '1') {

@@ -2,7 +2,7 @@
     <div class="row">
         <form class="form-inline mt-5">
             <div class="md-form my-0">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                <input class="form-control" [(ngModel)]="FilterPipeUser" [ngModelOptions]="{ standalone: true }" type="text" placeholder="Search" aria-label="Search">
             </div>
             <button class="btn btn-primary mx-5" (click)="clear()" type="button" data-toggle="modal" data-target="#crear">Agregar</button>
         </form>
@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users | paginate: {itemsPerPage: 6, currentPage: actualPage} | filter: FilterPipe">
+                <tr *ngFor="let user of users | paginate: {itemsPerPage: 6, currentPage: actualPage} | filterUser: FilterPipeUser">
                     <td>{{user.rol_id}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.lastname}}</td>

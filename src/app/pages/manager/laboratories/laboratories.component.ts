@@ -16,7 +16,6 @@ export class LaboratoriesComponent implements OnInit {
   constructor(private laboratoryService: LaboratoryService,
     private storageService: StorageService,
     private router: Router) {
-    this.getlaboratories();
   }
 
   user: any;
@@ -27,6 +26,7 @@ export class LaboratoriesComponent implements OnInit {
     } else {
       this.router.navigate(['home']);
     }
+    this.getlaboratories();
   }
 
 
@@ -48,7 +48,9 @@ export class LaboratoriesComponent implements OnInit {
 
   laboratories: any = [];
 
-  getlaboratories() {
+  async getlaboratories() {
+    const laboratory = await this.laboratoryService.getLaboratory().toPromise();
+    this.laboratories = JSON.parse(laboratory.data);
     this.laboratoryService.getLaboratory().subscribe(data => {
       this.laboratories = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
@@ -67,6 +69,7 @@ export class LaboratoriesComponent implements OnInit {
       let res: any;
       res = data;
       if (res.code === '1') {
+        this.getlaboratories();
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-start',
@@ -83,7 +86,6 @@ export class LaboratoriesComponent implements OnInit {
           icon: 'success',
           title: 'Se eliminó satisfactoriamente'
         })
-        this.getlaboratories();
       } else if (res.code === '2') {
         const Toast = Swal.mixin({
           toast: true,

@@ -12,7 +12,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { InventaryComponent } from './pages/manager/inventary/inventary.component';
 import { ProvidersComponent } from './pages/manager/providers/providers.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
-import { VentaComponent } from './pages/venta/venta.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { SalesComponent } from './pages/manager/sales/sales.component';
 import { UsersComponent } from './pages/manager/users/users.component';
@@ -31,6 +30,7 @@ import { PharmacyComponent } from './pages/manager/pharmacy/pharmacy.component';
 import { AdministadorComponent } from './pages/administador/administador.component';
 import { FilterProviderPipe } from 'src/pipes/filterProvider.pipe';
 import { FilterPipeUser } from 'src/pipes/filterUser.pipe';
+import { EmpleadoComponent } from './pages/empleado/empleado.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,6 @@ import { FilterPipeUser } from 'src/pipes/filterUser.pipe';
     InventaryComponent,
     ProvidersComponent,
     CarouselComponent,
-    VentaComponent,
     CarritoComponent,
     SalesComponent,
     UsersComponent,
@@ -58,6 +57,7 @@ import { FilterPipeUser } from 'src/pipes/filterUser.pipe';
     FilterPipeUser,
     PharmacyComponent,
     AdministadorComponent,
+    EmpleadoComponent,
   ],
   imports: [
     BrowserModule,

@@ -87,7 +87,9 @@ export class LoginComponent implements OnInit {
           this.storageService.setCurrentSession(element);
           if (element.rol_id === '2') {
             this.router.navigate(['administrador']);
-          } else {
+          } else if (element.rol_id === '1') {
+            this.router.navigate(['empleado']);
+          } else{
             this.router.navigate(['home']);
           }
         } else {

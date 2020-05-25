@@ -1,0 +1,87 @@
+<body>
+    <div class="container">
+        <div class="row">
+            <form class="form-inline mt-5">
+                <div class="md-form my-0">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                </div>
+            </form>
+            <table class="table mt-5">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th scope="col">miligramos</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">descripcion</th>
+                        <th scope="col">fecha de exp</th>
+                        <th scope="col">fecha de venc</th>
+                        <th scope="col">lote code</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Accion</th>
+                        <th scope="col">Ver carrito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let inventory of products">
+                        <td>{{inventory.milligrams}}</td>
+                        <td>{{inventory.name}}</td>
+                        <td>{{inventory.description}}</td>
+                        <td>{{inventory.admissiondate}}</td>
+                        <td>{{inventory.expirationdate}}</td>
+                        <td>{{inventory.lotecode}}</td>
+                        <td><input type="number" [(ngModel)]="inventory.quantity" min="1" maxlength="{{inventory.quantity}}">
+                        </td>
+                        <td>{{inventory.provider_id}}</td>
+                        <td>{{inventory.status_id}}</td>
+                        <td><button class="btn btn-primary" type="submit" (click)="addList(inventory)" data-toggle="modal">Agregar</button></td>
+                        <td><button class="btn btn-primary" type="submit" data-target="#carrito" data-toggle="modal">carrito</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<div class="modal fade" id="carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tu carrito</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th scope="col">miligramos</th>
+                            <th scope="col">nombre</th>
+                            <th scope="col">descripcion</th>
+                            <th scope="col">fecha de exp</th>
+                            <th scope="col">fecha de venc</th>
+                            <th scope="col">lote code</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Proveedor</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of listproducts">
+                            <td>{{product.milligrams}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.admissiondate}}</td>
+                            <td>{{product.expirationdate}}</td>
+                            <td>{{product.lotecode}}</td>
+                            <td>{{product.quantity}}</td>
+                            <td>{{product.provider_id}}</td>
+                            <td>{{product.status_id}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

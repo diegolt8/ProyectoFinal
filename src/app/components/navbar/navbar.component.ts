@@ -33,6 +33,10 @@ export class NavbarComponent implements OnInit {
   }
 
   login() {
+    this.router.navigate(['login']);
+  }
+
+  adminitrador() {
     this.router.navigate(['administrador']);
   }
 

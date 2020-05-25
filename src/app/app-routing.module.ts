@@ -1,6 +1,5 @@
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { VentaComponent } from './pages/venta/venta.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { InventaryComponent } from './pages/manager/inventary/inventary.component';
@@ -16,10 +15,11 @@ import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.co
 import { LoginComponent } from './pages/login/login.component';
 import { PharmacyComponent } from './pages/manager/pharmacy/pharmacy.component';
 import { AdministadorComponent } from './pages/administador/administador.component';
+import { EmpleadoComponent } from './pages/empleado/empleado.component';
+import { SalesComponent } from './pages/manager/sales/sales.component';
 
 
 const routes: Routes = [
-  { path: 'venta', component: VentaComponent },
   { path: 'home', component: HomeComponent },
   { path: '', component: HomeComponent },
   { path: 'carrito', component: CarritoComponent },
@@ -35,7 +35,9 @@ const routes: Routes = [
   { path: 'farmacia', component: PharmacyComponent },
   { path: 'tipo producto', component: TypeproductComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'administrador', component: AdministadorComponent }
+  { path: 'administrador', component: AdministadorComponent },
+  { path: 'empleado', component: EmpleadoComponent },
+  { path: 'venta', component: SalesComponent }
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import { LaboratoryService } from 'src/app/services/laboratory.service';
 import { StatusService } from 'src/app/services/status.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { element } from 'protractor';
+import { UserService } from 'src/app/services/user.service';
 
 const { MICROSERVICE_URL } = environment;
 
@@ -24,7 +25,7 @@ export class SalesComponent implements OnInit {
     private laboratoryService: LaboratoryService,
     private statusService: StatusService,
     private inventoryService: InventoryService,
-    private storageService: StorageService) { }
+    private userService: UserService) { }
 
 
   urlImage = `${MICROSERVICE_URL}/ProyectoFinalBackend/`;
@@ -36,8 +37,12 @@ export class SalesComponent implements OnInit {
   typeproducts: any = [];
   laboratories: any = [];
   status: any = [];
+  employees: any = [];
+  clients: any = [];
 
   imgOld = '';
+
+  total: any;
 
   image: any = null;
 
@@ -48,6 +53,8 @@ export class SalesComponent implements OnInit {
     this.getTypeProducts();
     this.getLaboratories();
     this.getStatus();
+    this.getEmployee();
+    this.getclient();
   }
 
   changeListener($event): void {
@@ -68,6 +75,26 @@ export class SalesComponent implements OnInit {
 
   addList(inventory) {
     this.listproducts.push(inventory);
+    this.getTotal(inventory.id, inventory.quantity);
+  }
+
+  getEmployee() {
+    this.userService.getEmployee().subscribe(data => {
+      this.employees = JSON.parse(JSON.parse(JSON.stringify(data)).data);
+    });
+  }
+
+  getTotal(id, quantity) {
+    this.inventoryService.getTotal(id, quantity).subscribe(data => {
+      this.total = JSON.parse(JSON.parse(JSON.stringify(data)).data);
+      console.log('+++++++', this.total);
+    });
+  }
+
+  getclient() {
+    this.userService.getClient().subscribe(data => {
+      this.clients = JSON.parse(JSON.parse(JSON.stringify(data)).data);
+    });
   }
 
   async getInventories() {

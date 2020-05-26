@@ -19,7 +19,6 @@
                         <th scope="col">Proveedor</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Accion</th>
-                        <th scope="col">Ver carrito</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,10 +34,10 @@
                         <td>{{inventory.provider_id}}</td>
                         <td>{{inventory.status_id}}</td>
                         <td><button class="btn btn-primary" type="submit" (click)="addList(inventory)" data-toggle="modal">Agregar</button></td>
-                        <td><button class="btn btn-primary" type="submit" data-target="#carrito" data-toggle="modal">carrito</button></td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-primary" type="submit" data-target="#carrito" data-toggle="modal">carrito</button>
         </div>
     </div>
 </body>
@@ -53,7 +52,21 @@
           </button>
             </div>
             <div class="modal-body">
-                <table class="table">
+                <div class="input-field">
+                    <label for="cliente">Cliente</label>
+                    <select class="form-control">
+                        <option value="1">Seleccione</option>
+                        <option *ngFor="let client of clients">{{client.name}}</option>
+                        </select>
+                </div>
+                <div class="input-field">
+                    <label for="empleado">Empleado</label>
+                    <select class="form-control">
+                        <option value="1">Seleccione</option>
+                        <option *ngFor="let employee of employees">{{employee.name}}</option>
+                        </select>
+                </div>
+                <table class="table mt-5">
                     <thead class="bg-primary text-light">
                         <tr>
                             <th scope="col">miligramos</th>
@@ -81,6 +94,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="input-field">
+                    <label for="total">Total de venta</label>
+                    <input type="number" disabled class="form-control">
+                </div>
             </div>
         </div>
     </div>

@@ -21,6 +21,16 @@ export class UserService {
             this.helperService.generarToken());
     }
 
+    getEmployee() {
+        return this.http.get<any>(this.url + '?action=listemployee&token=' +
+            this.helperService.generarToken());
+    }
+
+    getClient() {
+        return this.http.get<any>(this.url + '?action=listclient&token=' +
+            this.helperService.generarToken());
+    }
+
     saveUser(postData: any) {
         postData.append('token', this.helperService.generarToken());
         return this.http.post(this.url, postData);

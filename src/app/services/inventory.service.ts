@@ -17,6 +17,11 @@ export class InventoryService {
             this.helperService.generarToken());
     }
 
+    getTotal(id: any, quantity: any) {
+        return this.http.get<any>(this.url + '?action=totalsale&id=' + id + '&quantity=' + quantity + '&token=' +
+            this.helperService.generarToken());
+    }
+
     saveInventory(postData: any) {
         postData.append('token', this.helperService.generarToken());
         return this.http.post(this.url, postData);

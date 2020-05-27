@@ -6,9 +6,9 @@ import { shelfService } from 'src/app/services/shelf.service';
 import { TypeProductService } from 'src/app/services/typeproduct.service';
 import { LaboratoryService } from 'src/app/services/laboratory.service';
 import { StatusService } from 'src/app/services/status.service';
-import { StorageService } from 'src/app/services/storage.service';
-import { element } from 'protractor';
+import Swal from 'sweetalert2';
 import { UserService } from 'src/app/services/user.service';
+import { SaleService } from 'src/app/services/sales.service';
 
 const { MICROSERVICE_URL } = environment;
 
@@ -25,7 +25,8 @@ export class SalesComponent implements OnInit {
     private laboratoryService: LaboratoryService,
     private statusService: StatusService,
     private inventoryService: InventoryService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private saleService: SaleService) { }
 
 
   urlImage = `${MICROSERVICE_URL}/ProyectoFinalBackend/`;
@@ -42,7 +43,7 @@ export class SalesComponent implements OnInit {
 
   imgOld = '';
 
-  total: any;
+  total = 0;
 
   image: any = null;
 
@@ -55,6 +56,21 @@ export class SalesComponent implements OnInit {
     this.getStatus();
     this.getEmployee();
     this.getclient();
+  }
+
+  dateNow = new Date();
+  dd = String(this.dateNow.getDate()).padStart(2, '0');
+  mm = String(this.dateNow.getMonth() + 1).padStart(2, '0');
+  yyyy = this.dateNow.getFullYear();
+
+  today = this.yyyy + '-' + this.mm + '-' + this.dd;
+
+  sale: any = {
+    saledate: this.today,
+    saletotal: 0,
+    client_id: 0,
+    employee_id: 0,
+    id: 0
   }
 
   changeListener($event): void {
@@ -71,23 +87,38 @@ export class SalesComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
 
-  add = true;
+  totalSale() {
+    this.listproducts.forEach(element => {
+      this.sale.saletotal = this.sale.saletotal + (element.quantity * element.price);
+    });
+  }
+
+  editQuantity(quantity) {
+    this.listproducts.forEach(element => {
+      element.quantity = element.quantity - quantity;
+    });
+  }
 
   addList(inventory) {
-    this.listproducts.push(inventory);
-    this.getTotal(inventory.id, inventory.quantity);
+    this.total = 0;
+    let add = false;
+    this.listproducts.forEach(element => {
+      if (element.id === inventory.id) {
+        add = true;
+        if (inventory.quantity !== element.quantity) {
+          element.quantity = inventory.quantity;
+        }
+      }
+    });
+    if (!add) {
+      this.listproducts.push(inventory);
+    }
+    this.totalSale();
   }
 
   getEmployee() {
     this.userService.getEmployee().subscribe(data => {
       this.employees = JSON.parse(JSON.parse(JSON.stringify(data)).data);
-    });
-  }
-
-  getTotal(id, quantity) {
-    this.inventoryService.getTotal(id, quantity).subscribe(data => {
-      this.total = JSON.parse(JSON.parse(JSON.stringify(data)).data);
-      console.log('+++++++', this.total);
     });
   }
 
@@ -174,6 +205,90 @@ export class SalesComponent implements OnInit {
     this.statusService.getStatus().subscribe(data => {
       this.status = JSON.parse(JSON.parse(JSON.stringify(data)).data);
     });
+  }
+
+
+  saveSale() {
+
+    this.clients.forEach(element => {
+      if (element.name === this.sale.client_id) {
+        this.sale.client_id = element.id;
+      }
+    });
+
+    this.employees.forEach(element => {
+      if (element.name === this.sale.employee_id) {
+        this.sale.employee_id = element.id;
+      }
+    });
+
+    const dateNow = new Date();
+    const dd = String(dateNow.getDate()).padStart(2, '0');
+    const mm = String(dateNow.getMonth() + 1).padStart(2, '0');
+    const yyyy = dateNow.getFullYear();
+
+    const today = yyyy + '-' + mm + '-' + dd;
+
+    const postObject = new FormData();
+
+    postObject.append('action', 'save');
+    postObject.append('saledate', today);
+    postObject.append('saletotal', this.sale.saletotal);
+    postObject.append('client_id', this.sale.client_id);
+    postObject.append('employee_id', this.sale.employee_id);
+    postObject.append('id', '0');
+
+    this.saleService.saveSale(postObject).subscribe(data => {
+      console.log(this.products);
+      console.log(this.listproducts);
+      this.listproducts.forEach(list => {
+        this.products.forEach(product => {
+          if (product.id === list.id) {
+            product.quantity = product.quantity - list.quantity;
+          }
+        });
+      });
+      this.products.forEach(async element => {
+        await this.inventoryService.updateQuantity(element.id, element.quantity);
+      })
+      let res: any;
+      res = data;
+      if (res.code === '1') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se registro satisfactoriamente',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getInventories();
+      } else if (res.code === '2') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Oops! no se pudo registrar',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else if (res.code === '3') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Oops! resulto un problema',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    });
+  }
+
+  clear() {
+    this.sale = {
+      saledate: [null],
+      saletotal: 0,
+      client_id: 1,
+      employee_id: 1
+    }
   }
 
 }

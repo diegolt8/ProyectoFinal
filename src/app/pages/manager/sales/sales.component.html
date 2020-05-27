@@ -29,7 +29,7 @@
                         <td>{{inventory.admissiondate}}</td>
                         <td>{{inventory.expirationdate}}</td>
                         <td>{{inventory.lotecode}}</td>
-                        <td><input type="number" [(ngModel)]="inventory.quantity" min="1" maxlength="{{inventory.quantity}}">
+                        <td><input type="number" [(ngModel)]="inventory.quantity">
                         </td>
                         <td>{{inventory.provider_id}}</td>
                         <td>{{inventory.status_id}}</td>
@@ -54,14 +54,14 @@
             <div class="modal-body">
                 <div class="input-field">
                     <label for="cliente">Cliente</label>
-                    <select class="form-control">
+                    <select [(ngModel)]="sale.client_id" name="client_id" #client_id="ngModel" class="form-control">
                         <option value="1">Seleccione</option>
                         <option *ngFor="let client of clients">{{client.name}}</option>
                         </select>
                 </div>
                 <div class="input-field">
                     <label for="empleado">Empleado</label>
-                    <select class="form-control">
+                    <select [(ngModel)]="sale.employee_id" name="employee_id" #employee_id="ngModel" class="form-control">
                         <option value="1">Seleccione</option>
                         <option *ngFor="let employee of employees">{{employee.name}}</option>
                         </select>
@@ -95,8 +95,12 @@
                     </tbody>
                 </table>
                 <div class="input-field">
-                    <label for="total">Total de venta</label>
-                    <input type="number" disabled class="form-control">
+                    <label>Total de venta</label>
+                    <input [value]="total" [(ngModel)]="sale.saletotal" name="saletotal" #saletotal="ngModel" disabled class="form-control">
+                </div>
+                <div class="input-flied mx-2 mt-4">
+                    <button (click)="saveSale()" type="submit" class="btn btn-success">Finalizar</button>
+                    <button data-dismiss="close" (click)="clear()" type="submit" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
         </div>

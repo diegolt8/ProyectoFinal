@@ -49,4 +49,9 @@ export class UserService {
     login(user: any) {
         return this.http.post(this.urlLogin, JSON.stringify(user)).toPromise();
     }
+
+    updatePoints(id: any, points: any) {
+        return this.http.get(this.url + '?action=updatepoint&id=' + id + '&points=' + points + '&token=' +
+        this.helperService.generarToken());
+    }
 }

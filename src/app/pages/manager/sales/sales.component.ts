@@ -93,12 +93,6 @@ export class SalesComponent implements OnInit {
     });
   }
 
-  editQuantity(quantity) {
-    this.listproducts.forEach(element => {
-      element.quantity = element.quantity - quantity;
-    });
-  }
-
   addList(inventory) {
     this.total = 0;
     let add = false;

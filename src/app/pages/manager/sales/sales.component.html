@@ -29,7 +29,7 @@
                         <td>{{inventory.admissiondate}}</td>
                         <td>{{inventory.expirationdate}}</td>
                         <td>{{inventory.lotecode}}</td>
-                        <td><input type="number" [(ngModel)]="inventory.quantity">
+                        <td><input type="number" min="0" max="{{inventory.quantity}}" [(ngModel)]="inventory.quantity">
                         </td>
                         <td>{{inventory.provider_id}}</td>
                         <td>{{inventory.status_id}}</td>

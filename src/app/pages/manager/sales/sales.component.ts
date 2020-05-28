@@ -239,16 +239,7 @@ export class SalesComponent implements OnInit {
     postObject.append('id', '0');
 
     this.saleService.saveSale(postObject).subscribe(data => {
-      console.log(this.products);
-      console.log(this.listproducts);
-      this.listproducts.forEach(list => {
-        this.products.forEach(product => {
-          if (product.id === list.id) {
-            product.quantity = product.quantity - list.quantity;
-          }
-        });
-      });
-      this.products.forEach(async element => {
+      this.listproducts.forEach(async element => {
         await this.inventoryService.updateQuantity(element.id, element.quantity);
       })
       let res: any;

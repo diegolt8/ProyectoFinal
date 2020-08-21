@@ -10,27 +10,21 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { InventaryComponent } from './pages/manager/inventary/inventary.component';
-import { ProvidersComponent } from './pages/manager/providers/providers.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { SalesComponent } from './pages/manager/sales/sales.component';
-import { UsersComponent } from './pages/manager/users/users.component';
-import { ShelfsComponent } from './pages/manager/shelfs/shelfs.component';
-import { LaboratoriesComponent } from './pages/manager/laboratories/laboratories.component';
 import { CityComponent } from './pages/manager/city/city.component';
 import { DatePipe } from '@angular/common';
 import { DepartmentComponent } from './pages/manager/department/department.component';
 import { RolComponent } from './pages/manager/rol/rol.component';
 import { StatusComponent } from './pages/manager/status/status.component';
 import { TypeproductComponent } from './pages/manager/typeproduct/typeproduct.component';
-import { LoginComponent } from './pages/login/login.component';
-import { FilterPipe } from 'src/pipes/filter.pipe';
 import { StorageService } from './services/storage.service';
 import { PharmacyComponent } from './pages/manager/pharmacy/pharmacy.component';
-import { AdministadorComponent } from './pages/administador/administador.component';
-import { FilterProviderPipe } from 'src/pipes/filterProvider.pipe';
-import { FilterPipeUser } from 'src/pipes/filterUser.pipe';
 import { EmpleadoComponent } from './pages/empleado/empleado.component';
+import { AuthModule } from './auth/auth.module';
+import { AdministradorModule } from './administrador/administrador.module';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -39,24 +33,15 @@ import { EmpleadoComponent } from './pages/empleado/empleado.component';
     NavbarComponent,
     FooterComponent,
     InventaryComponent,
-    ProvidersComponent,
     CarouselComponent,
     CarritoComponent,
     SalesComponent,
-    UsersComponent,
-    ShelfsComponent,
-    LaboratoriesComponent,
     CityComponent,
     DepartmentComponent,
     RolComponent,
     StatusComponent,
     TypeproductComponent,
-    LoginComponent,
-    FilterPipe,
-    FilterProviderPipe,
-    FilterPipeUser,
     PharmacyComponent,
-    AdministadorComponent,
     EmpleadoComponent,
   ],
   imports: [
@@ -65,13 +50,13 @@ import { EmpleadoComponent } from './pages/empleado/empleado.component';
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    AuthModule,
+    AdministradorModule,
+    PipesModule
   ],
   providers: [
     FormBuilder,
     DatePipe,
-    FilterPipe,
-    FilterProviderPipe,
-    FilterPipeUser,
     StorageService,
   ],
   bootstrap: [AppComponent]
